@@ -1,0 +1,63 @@
+<resources>
+    <string name="DEVELOPER_KEY">AIzaSyA9cbrHnyMsZllw-DRFFDXf7nwjm15lQ4s</string>
+    <string name="app_name">Movie Torrents</string>
+    <string name="title_activity_movie_details" />
+    <string name="action_settings">Settings</string>
+
+    <!--<string name="etSearch_hint"><font size="12">Search by Title, Actor, Director, IMDb Code</font></string>-->
+    <string name="etSearch_hint"><font size="12">Search by Title</font></string>
+
+    <string-array name="array_imdb_rating">
+        <item>Any</item>
+        <item>2.0+</item>
+        <item>3.0+</item>
+        <item>4.0+</item>
+        <item>5.0+</item>
+        <item>6.0+</item>
+        <item>7.0+</item>
+        <item>8.0+</item>
+        <item>9.0+</item>
+    </string-array>
+
+    <string-array name="array_genre">
+        <item>All</item>
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Animation</item>
+        <item>Biography</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Fantasy</item>
+        <item>Film-Noir</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Music</item>
+        <item>Musical</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Sci-Fi</item>
+        <item>Sport</item>
+        <item>Thriller</item>
+        <item>War</item>
+        <item>Western</item>
+    </string-array>
+
+    <string-array name="array_sort_by">
+        <item>Date added</item>
+        <item>Title</item>
+        <item>Year</item>
+        <item>Rating</item>
+        <!--    <item>Peers</item>
+                <item>Seeds</item>-->
+        <item>Download count</item>
+        <!--<item>Like count</item>-->
+    </string-array>
+
+    <string-array name="array_order_by">
+        <item>Descending</item>
+        <item>Ascending</item>
+    </string-array>
+</resources>
