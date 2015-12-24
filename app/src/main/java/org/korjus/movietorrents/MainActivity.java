@@ -28,10 +28,6 @@ public class MainActivity extends Activity {
         instance = this;
     }
 
-    public static Context getContext() {
-        return instance;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +95,7 @@ public class MainActivity extends Activity {
     }
 
     public String getUrl(SortOrderEnum sortOrderEnum) {
-        String BASE_URL = "https://yts.ag/api/v2/list_movies.json?quality=1080p&";
+        final String BASE_URL = "https://yts.ag/api/v2/list_movies.json?quality=1080p&";
         String pageWithNr = "&page=" + String.valueOf(pageNr);
         increasePageNr();
 
@@ -150,6 +146,10 @@ public class MainActivity extends Activity {
 
     public long getNrOfItemsInDb() {
         return nrOfItemsInDb;
+    }
+
+    public static Context getContext() {
+        return instance;
     }
 
     public void setNrOfItemsInDb(long nrOfItemsInDb) {
