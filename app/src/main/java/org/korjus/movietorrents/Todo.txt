@@ -1,6 +1,4 @@
-email bugs to yts.ag
-downgrade
-check wifi
+
 
 // TODO rt ratings:   https://yts.ag/api/v2/list_movies.json?sort_by=date_added&minimum_rating=6&with_rt_ratings=true&quality=1080p&page=1
 // TODO google android gridview Imageadapter refresh flickering on notifyDataSetChanged
@@ -10,3 +8,19 @@ check wifi
 
 cd data/data/org.korjus.movietorrents/databases
 sqlite3 movieDatabase.db
+
+
+
+Hi,
+there are couple of bugs in API List Movies function.
+Sorting movies by peers, seeds, like_count dont work.
+Returning the list with the Rotten Tomatoes rating included dont work.
+Its not possible to search movies by IMDb Title Code, Actor Name/IMDb Code, Director Name/IMDb Code.
+
+For example these 2 URLs return the same value:
+https://yts.ag/api/v2/list_movies.json&sort_by=like_count&with_rt_ratings=true
+https://yts.ag/api/v2/list_movies.json&sort_by=seeds&with_rt_ratings=false
+
+If you are interested I can report more bugs.
+
+Thanks.

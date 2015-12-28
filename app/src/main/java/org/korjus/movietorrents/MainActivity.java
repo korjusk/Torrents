@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.GridView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -36,6 +39,7 @@ public class MainActivity extends Activity {
         settings = getSharedPreferences("settings", 0);
         editor = settings.edit();
 
+        warnIfWifiDisabled();
         loadSettings();
         InstantiateDatabaseHelper();
         downloadData();
@@ -52,6 +56,17 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+    }
+
+    private void warnIfWifiDisabled() {
+        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+        if (!wm.isWifiEnabled()) {
+            Log.d(TAG, "Wifi disabled");
+            Toast.makeText(instance, "Wifi is Disabled!", Toast.LENGTH_LONG);
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    "Wifi is Disabled!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 
     private void loadSettings() {
