@@ -20,6 +20,18 @@ import java.util.List;
 public class CreditsImageAdapter extends
         RecyclerView.Adapter<CreditsImageAdapter.ViewHolder> {
     private static final String TAG = "u8i9CreditsImageAdapter";
+    private List<DetailsData.Credits> credits;
+    MainActivity mainActivity;
+    private int imageWidth;
+    public static int imageHeight;
+
+    // Pass in the data into the constructor
+    public CreditsImageAdapter(List<DetailsData.Credits> credit) {
+        credits = credit;
+        mainActivity = (MainActivity) MainActivity.getContext();
+        imageWidth = mainActivity.getDisplayWith() / 3;
+        imageHeight = (int) (imageWidth * 1.5);
+    }
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -43,13 +55,6 @@ public class CreditsImageAdapter extends
         }
     }
 
-    // Store a member variable for the contacts
-    private List<DetailsData.Credits> credits;
-
-    // Pass in the contact array into the constructor
-    public CreditsImageAdapter(List<DetailsData.Credits> credit) {
-        credits = credit;
-    }
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
@@ -67,7 +72,7 @@ public class CreditsImageAdapter extends
     // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(CreditsImageAdapter.ViewHolder viewHolder, int position) {
-        // Get the data model based on position
+         // Get the data model based on position
         DetailsData.Credits credits = this.credits.get(position);
 
         // Set item views based on the data model
@@ -76,17 +81,16 @@ public class CreditsImageAdapter extends
 
 
         ImageView ivCreditsImage = viewHolder.ivCreditsImage;
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(342, 513);
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(imageWidth, imageHeight);
         ivCreditsImage.setLayoutParams(layoutParams);
         ivCreditsImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
-
-        Picasso.with(MainActivity.getContext())
+        Picasso.with(mainActivity)
                 .load(credits.getPoster())
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.error)
                 .into(ivCreditsImage);
-
     }
 
     // Return the total count of items

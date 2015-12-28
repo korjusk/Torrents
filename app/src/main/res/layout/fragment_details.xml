@@ -30,7 +30,7 @@
             <ImageView
                 android:id="@+id/ivPoster"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:adjustViewBounds="true"
@@ -66,7 +66,8 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
-                        android:src="@drawable/ic_imdb_star" />
+                        android:src="@drawable/ic_imdb_star"
+                        android:layout_alignParentLeft="true" />
 
                     <TextView
                         android:id="@+id/tvRatingV"
@@ -76,14 +77,16 @@
                         android:layout_toEndOf="@+id/ivImdbIcon"
                         android:textColor="#000000"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_toRightOf="@+id/ivImdbIcon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/tvRatingV"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:layout_toRightOf="@+id/tvRatingV" />
 
                 </RelativeLayout>
 
@@ -150,6 +153,8 @@
             android:layout_height="1dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="#d1d1d1" />
 
         <TextView
@@ -164,19 +169,30 @@
             android:layout_height="1dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="#d1d1d1" />
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvCreditsContainer"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:visibility="gone"
 
 
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="#d1d1d1" />
 
         <TextView
             android:id="@+id/tvTagline"

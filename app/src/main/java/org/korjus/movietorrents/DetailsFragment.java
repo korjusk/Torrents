@@ -18,6 +18,7 @@ public class DetailsFragment extends Fragment {
     private static final String TAG = "u8i9 DetailsFragment";
     CreditsImageAdapter adapter;
     Movie movie;
+    MainActivity mainActivity;
 
     public DetailsFragment() {
     }
@@ -28,6 +29,7 @@ public class DetailsFragment extends Fragment {
         movie = DetailsActivity.movie;
         VolleySingleton.getInstance(getContext())
                 .startDownload(movie.getUrlMain(), DataTypeEnum.DETAILS_MAIN);
+        mainActivity = (MainActivity) MainActivity.getContext();
     }
 
     @Override
@@ -59,7 +61,10 @@ public class DetailsFragment extends Fragment {
         tvSize.setText(Html.fromHtml
                 ("File Size: " + "<font color=\"#000000\">" + movie.getSize_gb() +
                         "</font>" + "GB"));
-        Picasso.with(MainActivity.getContext())
+
+        ivPoster.getLayoutParams().width = (int) (mainActivity.getDisplayWith() * 0.45);
+
+        Picasso.with(mainActivity)
                 .load(movie.getPoster())
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.error)
@@ -84,6 +89,9 @@ public class DetailsFragment extends Fragment {
 
         // Attach the adapter to the recyclerview to populate items
         rvContacts.setAdapter(adapter);
+
+        rvContacts.getLayoutParams().height = CreditsImageAdapter.imageHeight + 70;
+        // todo update to wrap content
 
 
         return view;

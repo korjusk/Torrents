@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
     private static final String TAG = "u8i9 MainActivity";
     private static MainActivity instance;
-    private long nrOfItemsInDb = 0l;
+    private long nrOfItemsInDb = 0L;
     private int pageNr = 1;
     private String costumeUrl;
     private SQLiteDatabase db;
@@ -43,20 +44,10 @@ public class MainActivity extends Activity {
         loadSettings();
         InstantiateDatabaseHelper();
         downloadData();
-
-        // Set Image Adapter and on scroll listener
-        mainImageAdapter = new MainImageAdapter(this);
-        gridView = (GridView) findViewById(R.id.MainActivityGridView);
-        gridView.setAdapter(mainImageAdapter);
-        gridView.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public boolean onLoadMore(int page, int totalItemsCount) {
-                VolleySingleton.getInstance(MainActivity.getContext())
-                        .startDownload(getUrl(sortOrderEnum), DataTypeEnum.HOME);
-                return true;
-            }
-        });
+        setImageAdapterAndOnScrollListener();
     }
+
+
 
     private void warnIfWifiDisabled() {
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
@@ -87,6 +78,26 @@ public class MainActivity extends Activity {
             VolleySingleton.getInstance(MainActivity.getContext())
                     .startDownload(getUrl(sortOrderEnum), DataTypeEnum.HOME);
         }
+    }
+
+    private void setImageAdapterAndOnScrollListener() {
+        mainImageAdapter = new MainImageAdapter(this, getDisplayWith());
+        gridView = (GridView) findViewById(R.id.MainActivityGridView);
+        gridView.setAdapter(mainImageAdapter);
+        gridView.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount) {
+                VolleySingleton.getInstance(MainActivity.getContext())
+                        .startDownload(getUrl(sortOrderEnum), DataTypeEnum.HOME);
+                return true;
+            }
+        });
+    }
+
+    public int getDisplayWith() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics.widthPixels;
     }
 
     private void getCostumeUrl() {

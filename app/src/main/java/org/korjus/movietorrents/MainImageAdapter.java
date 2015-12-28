@@ -17,10 +17,14 @@ public class MainImageAdapter extends BaseAdapter {
     private static final String TAG = "u8i9 MainImageAdapter";
     private Context context;
     private MainActivity mainActivity;
+    private int posterWidth;
+    private int posterHeight;
 
-    public MainImageAdapter(Context c) {
+    public MainImageAdapter(Context c, int displayWidth) {
         context = c;
         mainActivity = (MainActivity) context;
+        posterWidth = displayWidth / 2;
+        posterHeight = (int) (posterWidth * 1.5);
     }
 
     // Create a new ImageView for each item referenced by the Adapter.
@@ -36,7 +40,7 @@ public class MainImageAdapter extends BaseAdapter {
             // Kui bug tekkis siis k6ik peale teise korra j6udisd siia
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(540, 810));
+            imageView.setLayoutParams(new GridView.LayoutParams(posterWidth, posterHeight));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         } else {
             imageView = (ImageView) convertView;
@@ -51,7 +55,7 @@ public class MainImageAdapter extends BaseAdapter {
         if (mainActivity.getNrOfItemsInDb() > 0) {
 
             // Kui bug tekkis siis URL oli 6ige kuid ei laadinud pilti imageViewi
-            Picasso.with(parent.getContext())
+            Picasso.with(mainActivity)
                     .load(movie.getPoster())
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.error)
@@ -68,9 +72,9 @@ public class MainImageAdapter extends BaseAdapter {
                 long movieNrInDb = (long) position + 1;
 
                 // new intent
-                Intent detailsIntent = new Intent(MainActivity.getContext(), DetailsActivity.class);
+                Intent detailsIntent = new Intent(mainActivity, DetailsActivity.class);
                 detailsIntent.putExtra("nr", movieNrInDb);
-                MainActivity.getContext().startActivity(detailsIntent);
+                mainActivity.startActivity(detailsIntent);
 
             }
         });
