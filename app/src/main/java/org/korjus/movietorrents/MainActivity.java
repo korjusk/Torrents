@@ -33,9 +33,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        costumeUrl = intent.getStringExtra("costumeUrl");
-
         settings = getSharedPreferences("settings", 0);
         editor = settings.edit();
 
@@ -55,20 +52,18 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+    }
 
+    private void loadSettings() {
+        pageNr = settings.getInt("pageNr", 1);
+        sortOrderEnum = SortOrderEnum.fromInteger(settings.getInt("SortOrderEnum", 0));
+        Movie.isPosterHd = settings.getBoolean("hdPoster", false);
+        nrOfItemsInDb = settings.getLong("nrOfItemsInDb", 0);
     }
 
     private void InstantiateDatabaseHelper() {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
-    }
-
-    public void resetSettings() {
-        editor.putInt("SortOrderEnum", 1);
-        editor.putInt("pageNr", 1);
-        editor.putLong("nrOfItemsInDb", 0);
-        editor.apply();
-        ParseJson.isImageAdapterNotified = false;
     }
 
     public void downloadData() {
@@ -77,6 +72,34 @@ public class MainActivity extends Activity {
             VolleySingleton.getInstance(MainActivity.getContext())
                     .startDownload(getUrl(sortOrderEnum), DataTypeEnum.HOME);
         }
+    }
+
+    private void getCostumeUrl() {
+        Intent intent = getIntent();
+        String costumeUrlFromIntent = intent.getStringExtra("costumeUrl");
+        if(costumeUrlFromIntent != null) {
+            costumeUrl = costumeUrlFromIntent;
+            editor.putString("costumeUrl", costumeUrl);
+            editor.apply();
+        }
+        if(costumeUrl == null){
+            costumeUrl = settings.getString("costumeUrl",
+                    "https://yts.ag/api/v2/list_movies.json?quality=1080p");
+        }
+    }
+
+    private void increasePageNr() {
+        pageNr++;
+        editor.putInt("pageNr", pageNr);
+        editor.apply();
+    }
+
+    public void resetSettings() {
+        editor.putInt("SortOrderEnum", 1);
+        editor.putInt("pageNr", 1);
+        editor.putLong("nrOfItemsInDb", 0);
+        editor.apply();
+        ParseJson.isImageAdapterNotified = false;
     }
 
     @Override
@@ -89,12 +112,13 @@ public class MainActivity extends Activity {
     protected void onStop() {
         super.onStop();
         editor.putLong("nrOfItemsInDb", nrOfItemsInDb);
+        editor.putString("costumeUrl", costumeUrl);
         editor.apply();
         Log.d(TAG, "onStop Settings: " + settings.getAll().toString());
 
     }
 
-    public String getUrl(SortOrderEnum sortOrderEnum) {
+    private String getUrl(SortOrderEnum sortOrderEnum) {
         final String BASE_URL = "https://yts.ag/api/v2/list_movies.json?quality=1080p&";
         String pageWithNr = "&page=" + String.valueOf(pageNr);
         increasePageNr();
@@ -111,25 +135,13 @@ public class MainActivity extends Activity {
                 Log.d(TAG, BASE_URL + "sort_by=seeds" + pageWithNr);
                 return BASE_URL + "sort_by=seeds" + pageWithNr;
             case COSTUME:
+                if(costumeUrl == null){
+                    getCostumeUrl();
+                }
                 Log.d(TAG, costumeUrl + pageWithNr);
                 return costumeUrl + pageWithNr;
-
         }
-
         return "error at getURL";
-    }
-
-    private void increasePageNr() {
-        pageNr++;
-        editor.putInt("pageNr", pageNr);
-        editor.apply();
-    }
-
-    private void loadSettings() {
-        pageNr = settings.getInt("pageNr", 1);
-        sortOrderEnum = SortOrderEnum.fromInteger(settings.getInt("SortOrderEnum", 0));
-        Movie.isPosterHd = settings.getBoolean("hdPoster", false);
-        nrOfItemsInDb = settings.getLong("nrOfItemsInDb", 0);
     }
 
     public GridView getGridView() {

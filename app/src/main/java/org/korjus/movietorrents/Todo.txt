@@ -1,9 +1,11 @@
+email bugs to yts.ag
+downgrade
+check wifi
+
 // TODO rt ratings:   https://yts.ag/api/v2/list_movies.json?sort_by=date_added&minimum_rating=6&with_rt_ratings=true&quality=1080p&page=1
 // TODO google android gridview Imageadapter refresh flickering on notifyDataSetChanged
 // TODO google baseadapter preload images
 // TODO fix loading semi-bug
-// TODO downgrade
-// TODO email bugs to yts.ag
 3 icons
 
 cd data/data/org.korjus.movietorrents/databases
