@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+// It's used to search movies or apply costume sorting for home page GridView
 public class SearchActivity extends Activity {
     private static final String TAG = "u8i9 SearchActivity";
     EditText etSearch;
@@ -22,12 +23,14 @@ public class SearchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        // Find View's
         etSearch = (EditText) findViewById(R.id.etSearch);
         spnImdbRating = (Spinner) findViewById(R.id.spnImdbRating);
         spnGenres = (Spinner) findViewById(R.id.spnGenres);
         spnSortBy = (Spinner) findViewById(R.id.spnSortBy);
         spnOrderBy = (Spinner) findViewById(R.id.spnOrderBy);
 
+        // Adding data to spinners
         ArrayAdapter<CharSequence> spnImdbRatingAdapter = ArrayAdapter.createFromResource
                 (this, R.array.array_imdb_rating, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> spnGenresAdapter = ArrayAdapter.createFromResource
@@ -48,6 +51,7 @@ public class SearchActivity extends Activity {
         spnOrderBy.setAdapter(spnOrderByAdapter);
     }
 
+    // Clears database, makes new URL, start's intent to download Json from that URL
     public void buttonClick(View view) {
         StringBuilder url =
                 new StringBuilder("https://yts.ag/api/v2/list_movies.json?quality=1080p");
@@ -92,5 +96,4 @@ public class SearchActivity extends Activity {
         goToHome.putExtra("costumeUrl", url.toString().toLowerCase());
         startActivity(goToHome);
     }
-
 }

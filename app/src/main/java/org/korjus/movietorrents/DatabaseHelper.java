@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
+// Uses Cupboard to handle SQLite database
+// Documentation: https://bitbucket.org/littlerobots/cupboard/wiki/Home
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "u8i9 DatabaseHelper";
     private static final String DATABASE_NAME = "movieDatabase.db";

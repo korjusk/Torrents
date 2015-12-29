@@ -3,6 +3,8 @@ package org.korjus.movietorrents;
 public enum SortOrderEnum {
     DEFAULT, LATEST, TOP_RATED, MOST_SEEDED, COSTUME;
 
+    // Using int to save enum state to settings
+    // This helps to convert int back to Enum
     public static SortOrderEnum fromInteger(int x) {
         switch (x) {
             case 0:

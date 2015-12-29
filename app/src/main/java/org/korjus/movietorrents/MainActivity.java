@@ -94,26 +94,6 @@ public class MainActivity extends Activity {
         });
     }
 
-    public int getDisplayWith() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        return metrics.widthPixels;
-    }
-
-    private void getCostumeUrl() {
-        Intent intent = getIntent();
-        String costumeUrlFromIntent = intent.getStringExtra("costumeUrl");
-        if(costumeUrlFromIntent != null) {
-            costumeUrl = costumeUrlFromIntent;
-            editor.putString("costumeUrl", costumeUrl);
-            editor.apply();
-        }
-        if(costumeUrl == null){
-            costumeUrl = settings.getString("costumeUrl",
-                    "https://yts.ag/api/v2/list_movies.json?quality=1080p");
-        }
-    }
-
     private void increasePageNr() {
         pageNr++;
         editor.putInt("pageNr", pageNr);
@@ -142,6 +122,26 @@ public class MainActivity extends Activity {
         editor.apply();
         Log.d(TAG, "onStop Settings: " + settings.getAll().toString());
 
+    }
+
+    public int getDisplayWith() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics.widthPixels;
+    }
+
+    private void getCostumeUrl() {
+        Intent intent = getIntent();
+        String costumeUrlFromIntent = intent.getStringExtra("costumeUrl");
+        if(costumeUrlFromIntent != null) {
+            costumeUrl = costumeUrlFromIntent;
+            editor.putString("costumeUrl", costumeUrl);
+            editor.apply();
+        }
+        if(costumeUrl == null){
+            costumeUrl = settings.getString("costumeUrl",
+                    "https://yts.ag/api/v2/list_movies.json?quality=1080p");
+        }
     }
 
     private String getUrl(SortOrderEnum sortOrderEnum) {

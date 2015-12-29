@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+// Simple full screen ImageView
 public class PosterPopupActivity extends Activity {
 
     @Override

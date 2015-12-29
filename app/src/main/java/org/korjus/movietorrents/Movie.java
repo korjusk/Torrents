@@ -2,6 +2,7 @@ package org.korjus.movietorrents;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
+// Data about movies, stored in SQLite Database
 public class Movie {
     private static final String TAG = "u8i9 Movie";
     public static boolean isPosterHd = false;

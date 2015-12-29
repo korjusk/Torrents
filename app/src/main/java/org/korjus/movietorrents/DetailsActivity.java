@@ -33,25 +33,32 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        // Set up Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Movie position in Database
         Intent intent = getIntent();
         movieNrInDb = intent.getLongExtra("nr", 0L);
 
+        // Main Database
         db = ((MainActivity) MainActivity.getContext()).getDb();
 
+        // Current Movie
         movie = cupboard().withDatabase(db).get(Movie.class, movieNrInDb);
-        detailsFragment = new DetailsFragment();
 
-
-        // Begin the transaction
+        // Replace placeholder with detailsFragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the contents of the container with the new fragment
+        detailsFragment = new DetailsFragment();
         ft.replace(R.id.placeholderForFragment, detailsFragment);
-        // Complete the changes added above
         ft.commit();
 
+        initiateFloatingActionButton();
+    }
+
+    private void initiateFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,22 +71,6 @@ public class DetailsActivity extends AppCompatActivity {
                 Log.d(TAG, "Movie Nr: " + String.valueOf(movieNrInDb));
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-    }
-
-    public void goToImdb(View view) {
-        Intent goToImdb = new Intent(Intent.ACTION_VIEW);
-        goToImdb.setData(Uri.parse(movie.getImdbUrl()));
-        startActivity(goToImdb);
-    }
-
-
-    public void goToFullScreen(View view) {
-        Intent goToFullScreen = new Intent(this, PosterPopupActivity.class);
-        goToFullScreen.putExtra("url", movie.getPosterHd());
-        startActivity(goToFullScreen);
     }
 
     public void magnetTorrent() {
@@ -91,6 +82,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void downloadTorrent() {
+        // Download torrent to /torrent/ directory.
         DownloadManager.Request request = new DownloadManager
                 .Request(Uri.parse(movie.getTorrentUrl()));
         request.setTitle(movie.getTitleLong());
@@ -117,21 +109,21 @@ public class DetailsActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         SharedPreferences settings = getSharedPreferences("settings", 0);
+
         boolean isHdPoster = settings.getBoolean("hdPoster", false);
         boolean isMenuMagnet = settings.getBoolean("menu_magnet", false);
+
         MenuItem hd = menu.findItem(R.id.menu_hd);
         MenuItem magnet = menu.findItem(R.id.menu_magnet);
+
         hd.setChecked(isHdPoster);
         magnet.setChecked(isMenuMagnet);
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here.
         int id = item.getItemId();
 
         SharedPreferences settings = getSharedPreferences("settings", 0);
@@ -153,9 +145,6 @@ public class DetailsActivity extends AppCompatActivity {
             case R.id.menu_top_rated:
                 saveSettingsAndResetDb(2);
                 break;
-            case R.id.menu_most_seeded:
-                saveSettingsAndResetDb(3);
-                break;
             case R.id.menu_costume:
             case R.id.menu_search:
                 Intent goToCostumeMenu = new Intent(this, SearchActivity.class);
@@ -176,16 +165,30 @@ public class DetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void goToImdb(View view) {
+        Intent goToImdb = new Intent(Intent.ACTION_VIEW);
+        goToImdb.setData(Uri.parse(movie.getImdbUrl()));
+        startActivity(goToImdb);
+    }
+
+    public void goToFullScreen(View view) {
+        Intent goToFullScreen = new Intent(this, PosterPopupActivity.class);
+        goToFullScreen.putExtra("url", movie.getPosterHd());
+        startActivity(goToFullScreen);
+    }
+
     public void saveSettingsAndResetDb(int sortOrder) {
         db.close();
         this.deleteDatabase("movieDatabase.db");
 
         SharedPreferences settings = getSharedPreferences("settings", 0);
         SharedPreferences.Editor editor = settings.edit();
+
         editor.putInt("SortOrderEnum", sortOrder);
         editor.putInt("pageNr", 1);
         editor.putLong("nrOfItemsInDb", 0);
         editor.apply();
+
         ParseJson.isImageAdapterNotified = false;
         NavUtils.navigateUpFromSameTask(this);
     }

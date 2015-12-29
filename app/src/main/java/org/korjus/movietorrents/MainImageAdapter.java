@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
+// Adapter for home page GridView
 public class MainImageAdapter extends BaseAdapter {
     private static final String TAG = "u8i9 MainImageAdapter";
     private Context context;

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
+// Converts Json input to Movie class and adds it to database
 public class ParseJson {
     private static final String TAG = "u8i9 ParseJson";
     private static StringBuilder genres = new StringBuilder();
@@ -85,7 +86,7 @@ public class ParseJson {
                 if (!isImageAdapterNotified) {
                     mainActivity.getMainImageAdapter().notifyDataSetChanged();
                     isImageAdapterNotified = true;
-                    // For smoother scrolling I wont notify Data Set Change after first time.
+                    // For smoother scrolling it wont notify Data Set Change after first time.
                 }
             }
         } catch (Exception e) {

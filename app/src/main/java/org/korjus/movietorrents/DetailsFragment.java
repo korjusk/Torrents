@@ -26,9 +26,14 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Current movie
         movie = DetailsActivity.movie;
+
+        // Download additional information
         VolleySingleton.getInstance(getContext())
                 .startDownload(movie.getUrlMain(), DataTypeEnum.DETAILS_MAIN);
+
         mainActivity = (MainActivity) MainActivity.getContext();
     }
 
@@ -77,9 +82,9 @@ public class DetailsFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
 
-        // Lookup the recyclerview in activity layout
+        // Lookup the RecyclerView in activity layout
         RecyclerView rvContacts = (RecyclerView) view.findViewById(R.id.rvCreditsContainer);
-        // Empty list before adding to atapter
+        // Empty list before adding to adapter
         DetailsData.credits.clear();
         // Create adapter passing in the data
         adapter = new CreditsImageAdapter(DetailsData.credits);
@@ -87,7 +92,7 @@ public class DetailsFragment extends Fragment {
         // Set layout manager to position the items
         rvContacts.setLayoutManager(layoutManager);
 
-        // Attach the adapter to the recyclerview to populate items
+        // Attach the adapter to the RecyclerView to populate items
         rvContacts.setAdapter(adapter);
 
         rvContacts.getLayoutParams().height = CreditsImageAdapter.imageHeight + 70;
@@ -99,12 +104,14 @@ public class DetailsFragment extends Fragment {
 
 
     public void updateUI(DetailsData detailsData) {
+        // Find Views
         TextView tvPlot = (TextView) getView().findViewById(R.id.tvPlot);
         TextView tvTagline = (TextView) getView().findViewById(R.id.tvTagline);
         TextView tvBudget = (TextView) getView().findViewById(R.id.tvBudgetV);
         TextView tvRevenue = (TextView) getView().findViewById(R.id.tvRevenueV);
         TextView tvProduction = (TextView) getView().findViewById(R.id.tvProductionV);
 
+        // Update values
         tvPlot.setText(detailsData.getOverview());
         tvTagline.setText(detailsData.getTagline());
         if (!detailsData.getBudget().equals("0")) {

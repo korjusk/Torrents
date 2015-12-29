@@ -6,7 +6,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
+// Downloads and parses additional data about the movies
+// Contains inner class for credit information
 public class DetailsData {
     private static final String TAG = "u8i9 DetailsData";
     public static ArrayList<Credits> credits = new ArrayList<>();
@@ -44,7 +45,7 @@ public class DetailsData {
                 }
             }
 
-            // geting credits
+            // Getting credits information
             JSONObject credRoot = response.getJSONObject("credits");
             JSONArray credArray = credRoot.getJSONArray("cast");
 
@@ -54,7 +55,6 @@ public class DetailsData {
                 String poster = current.getString("profile_path");
                 if (!poster.equals("null")) {
                     DetailsData.credits.add(detailsData.new Credits(name, poster));
-                    //DetailsFragment.adapter.notifyItemInserted(i);
                     DetailsActivity.detailsFragment.getAdapter().notifyItemInserted(i);
                     DetailsActivity.detailsFragment.setCreditsImageVisible();
                 }
@@ -97,7 +97,7 @@ public class DetailsData {
     }
 
 
-    // inner class for credits
+    // Inner class for credits
     public class Credits {
         private static final String TAG = "u8i9 Credits";
         String name;

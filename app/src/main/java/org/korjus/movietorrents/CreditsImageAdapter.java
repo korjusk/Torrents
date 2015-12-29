@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
-// Create the basic adapter extending from RecyclerView.Adapter
+// The adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class CreditsImageAdapter extends
         RecyclerView.Adapter<CreditsImageAdapter.ViewHolder> {
@@ -25,7 +25,7 @@ public class CreditsImageAdapter extends
     private int imageWidth;
     public static int imageHeight;
 
-    // Pass in the data into the constructor
+    // Pass in the data into the constructor and calculate image size
     public CreditsImageAdapter(List<DetailsData.Credits> credit) {
         credits = credit;
         mainActivity = (MainActivity) MainActivity.getContext();
@@ -36,7 +36,7 @@ public class CreditsImageAdapter extends
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
+        // Holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView tvName;
         public ImageView ivCreditsImage;
@@ -56,7 +56,7 @@ public class CreditsImageAdapter extends
     }
 
 
-    // Usually involves inflating a layout from XML and returning the holder
+    // Inflating a layout from XML and returning the holder
     @Override
     public CreditsImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

@@ -22,16 +22,12 @@
         android:checkable="true"
         android:title="Magnet Link's" />
     <item
+        android:id="@+id/menu_costume"
+        android:title="Costume Sort Order" />
+    <item
         android:id="@+id/menu_latest"
-        android:title="Latest" />
+        android:title="Latest Movies" />
     <item
         android:id="@+id/menu_top_rated"
-        android:title="Top Rated" />
-    <item
-        android:id="@+id/menu_most_seeded"
-        android:title="Most Seeded" />
-    <item
-        android:id="@+id/menu_costume"
-        android:title="Costume" />
-
+        android:title="Top Rated Movies" />
 </menu>
