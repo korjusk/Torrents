@@ -12,6 +12,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 
 public class MainActivity extends Activity {
@@ -19,7 +21,7 @@ public class MainActivity extends Activity {
     private static MainActivity instance;
     private long nrOfItemsInDb = 0L;
     private int pageNr = 1;
-    private String costumeUrl;
+    private String customUrl;
     private SQLiteDatabase db;
     private MainImageAdapter mainImageAdapter;
     private GridView gridView;
@@ -35,6 +37,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Crash reporting API, https://docs.fabric.io/
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         settings = getSharedPreferences("settings", 0);
@@ -118,7 +122,7 @@ public class MainActivity extends Activity {
     protected void onStop() {
         super.onStop();
         editor.putLong("nrOfItemsInDb", nrOfItemsInDb);
-        editor.putString("costumeUrl", costumeUrl);
+        editor.putString("customUrl", customUrl);
         editor.apply();
         Log.d(TAG, "onStop Settings: " + settings.getAll().toString());
 
@@ -130,16 +134,16 @@ public class MainActivity extends Activity {
         return metrics.widthPixels;
     }
 
-    private void getCostumeUrl() {
+    private void getCustomUrl() {
         Intent intent = getIntent();
-        String costumeUrlFromIntent = intent.getStringExtra("costumeUrl");
-        if(costumeUrlFromIntent != null) {
-            costumeUrl = costumeUrlFromIntent;
-            editor.putString("costumeUrl", costumeUrl);
+        String CustomUrlFromIntent = intent.getStringExtra("customUrl");
+        if(CustomUrlFromIntent != null) {
+            customUrl = CustomUrlFromIntent;
+            editor.putString("customUrl", customUrl);
             editor.apply();
         }
-        if(costumeUrl == null){
-            costumeUrl = settings.getString("costumeUrl",
+        if(customUrl == null){
+            customUrl = settings.getString("customUrl",
                     "https://yts.ag/api/v2/list_movies.json?quality=1080p");
         }
     }
@@ -160,12 +164,12 @@ public class MainActivity extends Activity {
             case MOST_SEEDED:
                 Log.d(TAG, BASE_URL + "sort_by=seeds" + pageWithNr);
                 return BASE_URL + "sort_by=seeds" + pageWithNr;
-            case COSTUME:
-                if(costumeUrl == null){
-                    getCostumeUrl();
+            case CUSTOM:
+                if(customUrl == null){
+                    getCustomUrl();
                 }
-                Log.d(TAG, costumeUrl + pageWithNr);
-                return costumeUrl + pageWithNr;
+                Log.d(TAG, customUrl + pageWithNr);
+                return customUrl + pageWithNr;
         }
         return "error at getURL";
     }

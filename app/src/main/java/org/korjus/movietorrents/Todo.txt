@@ -1,7 +1,10 @@
+remove order by asc&desc
+check net connection
+
 google android gridview Imageadapter refresh flickering on notifyDataSetChanged
 google baseadapter preload images
 fix loading semi-bug
-3 icons
+
 
 cd data/data/org.korjus.movietorrents/databases
 sqlite3 movieDatabase.db

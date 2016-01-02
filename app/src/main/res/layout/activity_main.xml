@@ -7,4 +7,6 @@
     android:gravity="center"
     android:numColumns="2"
     android:stretchMode="columnWidth"
-    tools:context=".MainActivity" />
+    tools:context=".MainActivity"
+    android:fadingEdge="none"
+    android:background="#000000"/>

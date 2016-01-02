@@ -47,7 +47,7 @@ public class MainImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
             // When you get a recycled item, check if it's not already the one you want to display.
             String newSrc = (String) imageView.getTag();
-            if (newSrc.equals(src)) {
+            if (src.equals(newSrc)) {
                 // If so, return it directly.
                 return imageView;
             }

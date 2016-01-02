@@ -25,10 +25,10 @@ public class ParseJson {
                         "Didn't find any movie.", Toast.LENGTH_LONG).show();
                 mainActivity.resetSettings();
 
-                Intent goToCostumeMenu = new Intent(MainActivity.getContext(), SearchActivity.class);
-                goToCostumeMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent goToCustomMenu = new Intent(MainActivity.getContext(), SearchActivity.class);
+                goToCustomMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                MainActivity.getContext().startActivity(goToCostumeMenu);
+                MainActivity.getContext().startActivity(goToCustomMenu);
 
             } else {
                 JSONArray arrayMovies = data.getJSONArray("movies");

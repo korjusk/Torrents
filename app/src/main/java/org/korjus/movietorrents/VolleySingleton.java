@@ -37,7 +37,7 @@ public class VolleySingleton {
         return instance;
     }
 
-    public synchronized void startDownload(String url, final DataTypeEnum type) {
+    public synchronized void startDownload(final String url, final DataTypeEnum type) {
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest
                 (url, null, new Response.Listener<JSONObject>() {
 
@@ -59,20 +59,20 @@ public class VolleySingleton {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(MainActivity.getContext(),
                                 "Error at loading from www.yts.ag - 404?", Toast.LENGTH_LONG).show();
-                        Log.d(TAG, type.toString() + error.toString());
+                        Log.d(TAG, type.toString() + url + error.toString());
 
                         // Deletes settings to avoid this error in future
                         ((MainActivity) MainActivity.getContext()).resetSettings();
 
-                        Intent goToCostumeMenu = new
+                        Intent goToCustomMenu = new
                                 Intent(MainActivity.getContext(), SearchActivity.class);
 
                         // Deletes backs tack to avoid this error in future
-                        goToCostumeMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        goToCustomMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         // Return's back to Search Activity
-                        MainActivity.getContext().startActivity(goToCostumeMenu);
+                        MainActivity.getContext().startActivity(goToCustomMenu);
                     }
                 });
 

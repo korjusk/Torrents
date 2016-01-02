@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-// It's used to search movies or apply costume sorting for home page GridView
+// It's used to search movies or apply custom sorting for home page GridView
 public class SearchActivity extends Activity {
     private static final String TAG = "u8i9 SearchActivity";
     EditText etSearch;
@@ -93,7 +93,7 @@ public class SearchActivity extends Activity {
         ParseJson.isImageAdapterNotified = false;
 
         Intent goToHome = new Intent(this, MainActivity.class);
-        goToHome.putExtra("costumeUrl", url.toString().toLowerCase());
+        goToHome.putExtra("customUrl", url.toString().toLowerCase());
         startActivity(goToHome);
     }
 }

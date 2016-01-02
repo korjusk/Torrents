@@ -1,5 +1,7 @@
 package org.korjus.movietorrents;
 
+import android.os.Build;
+
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 // Data about movies, stored in SQLite Database
@@ -130,6 +132,10 @@ public class Movie {
     }
 
     public String getTorrentUrl() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1){
+            // Gingerbread doesn't support https
+            return torrentUrl.replace("https", "http");
+        }
         return torrentUrl;
     }
 

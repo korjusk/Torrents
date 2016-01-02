@@ -4,20 +4,26 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.util.List;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
@@ -26,7 +32,6 @@ public class DetailsActivity extends AppCompatActivity {
     public static Movie movie;
     public static DetailsFragment detailsFragment;
     private long movieNrInDb;
-    private boolean isLinkMagnet = false;
     private SQLiteDatabase db;
 
     @Override
@@ -63,22 +68,62 @@ public class DetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences settings = getSharedPreferences("settings", 0);
+                boolean isLinkMagnet = settings.getBoolean("menu_magnet", false);
                 if (isLinkMagnet) {
                     magnetTorrent();
                 } else {
                     downloadTorrent();
                 }
-                Log.d(TAG, "Movie Nr: " + String.valueOf(movieNrInDb));
             }
         });
     }
 
     public void magnetTorrent() {
+        // New intent with magnet torrent URL (magnet:?xt=urn:btih:TORRENT_HASH&dn=...)
         Intent magnetTorrent = new Intent(Intent.ACTION_VIEW);
         magnetTorrent.setData(Uri.parse(movie.getMagnetTorrent()));
-        startActivity(magnetTorrent);
-        Log.d(TAG, "Downloading file to phone: " +
-                movie.getFileName() + ", from: " + movie.getTorrentUrl());
+
+        // Get the package manager
+        PackageManager packageManager = getPackageManager();
+        // Get activities that can handle the intent
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(magnetTorrent, 0);
+        // If 1 or more were returned then it safe to start intent
+        boolean isIntentSafe = activities.size() > 0;
+
+        if (isIntentSafe) {
+            startActivity(magnetTorrent);
+            Log.d(TAG, "Downloading file to phone: " +
+                    movie.getFileName() + ", from: " + movie.getMagnetTorrent());
+        } else {
+            // If there's no activities that can handle magnet torrent links
+
+            // Snackbar download button click listener
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        // Search torrent aps in Play Store intent
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW)
+                                .setData(Uri.parse("market://search?q=torrent"));
+                        startActivity(goToMarket);
+                    } catch (android.content.ActivityNotFoundException e) {
+                        // Search torrent aps in web if there's no play store installed
+                        Intent goToWebMarket = new Intent(Intent.ACTION_VIEW)
+                                .setData(Uri.parse("https://play.google.com/store/search?q=torrent"));
+                        startActivity(goToWebMarket);
+                    }
+                }
+            };
+
+            final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                    .coordinatorLayout);
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "Didn't find any torrent application.", Snackbar.LENGTH_LONG)
+                    .setAction("Download", onClickListener)
+                    .setActionTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+            snackbar.show();
+        }
     }
 
     private void downloadTorrent() {
@@ -92,12 +137,12 @@ public class DetailsActivity extends AppCompatActivity {
             request.setNotificationVisibility(DownloadManager
                     .Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         }
-        request.setDestinationInExternalPublicDir("/torrent/", movie.getFileName());
+        request.setDestinationInExternalPublicDir("/torrents/", movie.getFileName());
 
         // get download service and enqueue file
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
-        Log.d(TAG, "Downloading file to PC: " +
+        Log.d(TAG, "Downloading torrent file: " +
                 movie.getFileName() + ", from: " + movie.getTorrentUrl());
         Snackbar.make(this.findViewById(android.R.id.content),
                 "Download Successful!", Snackbar.LENGTH_LONG)
@@ -137,7 +182,6 @@ public class DetailsActivity extends AppCompatActivity {
             case R.id.menu_magnet:
                 item.setChecked(!item.isChecked());
                 editor.putBoolean("menu_magnet", item.isChecked());
-                isLinkMagnet = true;
                 break;
             case R.id.menu_latest:
                 saveSettingsAndResetDb(1);
@@ -145,10 +189,10 @@ public class DetailsActivity extends AppCompatActivity {
             case R.id.menu_top_rated:
                 saveSettingsAndResetDb(2);
                 break;
-            case R.id.menu_costume:
+            case R.id.menu_custom:
             case R.id.menu_search:
-                Intent goToCostumeMenu = new Intent(this, SearchActivity.class);
-                startActivity(goToCostumeMenu);
+                Intent goToCustomMenu = new Intent(this, SearchActivity.class);
+                startActivity(goToCustomMenu);
                 break;
             case R.id.menu_share:
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);

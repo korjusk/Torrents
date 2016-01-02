@@ -33,5 +33,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".SearchActivity"
             android:screenOrientation="portrait"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="cc18833e3ab3591266a9457cceec3c2776af4ec4" />
     </application>
 </manifest>
