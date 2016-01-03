@@ -44,7 +44,9 @@ public class DetailsActivity extends AppCompatActivity {
         // Set up Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Movie position in Database
         Intent intent = getIntent();
@@ -149,8 +151,6 @@ public class DetailsActivity extends AppCompatActivity {
                 request.setNotificationVisibility(DownloadManager
                         .Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             }
-
-
             request.setDestinationUri(Uri.fromFile(path));
 
             // get download service and enqueue file

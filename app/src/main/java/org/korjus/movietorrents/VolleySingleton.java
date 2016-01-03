@@ -38,10 +38,6 @@ public class VolleySingleton {
     }
 
     public synchronized void startDownload(final String url, final DataTypeEnum type) {
-        if (type.equals(DataTypeEnum.UPDATE)) {
-            Log.d(TAG, "Update");
-        }
-
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest
                 (url, null, new Response.Listener<JSONObject>() {
 
