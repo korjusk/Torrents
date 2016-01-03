@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.io.File;
 import java.util.List;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
@@ -127,26 +129,41 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void downloadTorrent() {
-        // Download torrent to /torrent/ directory.
-        DownloadManager.Request request = new DownloadManager
-                .Request(Uri.parse(movie.getTorrentUrl()));
-        request.setTitle(movie.getTitleLong());
-        // in order for this if to run, you must use the android 3.2 to compile your app
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            request.allowScanningByMediaScanner();
-            request.setNotificationVisibility(DownloadManager
-                    .Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        }
-        request.setDestinationInExternalPublicDir("/torrents/", movie.getFileName());
+        File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "Movie Torrents" + File.separator);
+        File path = new File(directory, movie.getFileName());
+        // have the object build the directory structure, if needed.
+        directory.mkdirs();
 
-        // get download service and enqueue file
-        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
-        Log.d(TAG, "Downloading torrent file: " +
-                movie.getFileName() + ", from: " + movie.getTorrentUrl());
-        Snackbar.make(this.findViewById(android.R.id.content),
-                "Download Successful!", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        if(path.exists()){
+            Log.d(TAG, "File exists!");
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    "File already exists in \nDownloads/Movie Torrents", Snackbar.LENGTH_LONG).show();
+        } else {
+            // Download torrent to downloads/Movie Torrents directory.
+            DownloadManager.Request request = new DownloadManager
+                    .Request(Uri.parse(movie.getTorrentUrl()));
+            request.setTitle(movie.getTitleLong());
+            // in order for this if to run, you must use the android 3.2 to compile your app
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager
+                        .Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            }
+
+
+            request.setDestinationUri(Uri.fromFile(path));
+
+            // get download service and enqueue file
+            DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            manager.enqueue(request);
+
+            Log.d(TAG, "Downloading torrent file, " +
+                    movie.getFileName() + ", from: " + movie.getTorrentUrl());
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    "Downloading", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            // todo open dir
+        }
     }
 
     @Override
@@ -204,6 +221,12 @@ public class DetailsActivity extends AppCompatActivity {
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 break;
+            case R.id.menu_update:
+                String updateUrl = "https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0";
+                Intent checkUpdates = new Intent(Intent.ACTION_VIEW);
+                checkUpdates.setData(Uri.parse(updateUrl));
+                startActivity(checkUpdates);
+                break;
         }
         editor.apply();
         return super.onOptionsItemSelected(item);
@@ -238,3 +261,17 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 }
+
+
+        /*
+        Log.d(TAG, "0 " + String.valueOf(Environment.getExternalStorageDirectory() + File.separator + "torrents55"));
+        Log.d(TAG, "1 " + String.valueOf(downloadsDir));
+        Log.d(TAG, "2 " + String.valueOf(downloadsDir.getPath()));
+        Log.d(TAG, "3 " + String.valueOf(downloadsDir.getAbsolutePath()));
+        Log.d(TAG, "4 " + String.valueOf(Environment.getExternalStorageDirectory()));
+        Log.d(TAG, "5 " + String.valueOf(Environment.getDataDirectory()));
+        Log.d(TAG, "6 " + String.valueOf(Environment.getDownloadCacheDirectory()));
+        Log.d(TAG, "7 " + String.valueOf(Environment.getRootDirectory()));
+        Log.d(TAG, "8 " + String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+        Log.d(TAG, "9 " + String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "torrents55"));
+        */
