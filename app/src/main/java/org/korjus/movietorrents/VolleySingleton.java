@@ -15,7 +15,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-// Handles all downloading
+import java.io.IOException;
+
+// Handles all JSON downloading
 // https://github.com/mcxiaoke/android-volley
 public class VolleySingleton {
     private static final String TAG = "u8i9 VolleySingleton";
@@ -57,9 +59,17 @@ public class VolleySingleton {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.getContext(),
-                                "Error at loading from www.yts.ag - 404?", Toast.LENGTH_LONG).show();
                         Log.d(TAG, type.toString() + url + error.toString());
+                        Log.d(TAG, "isInternetAvailable:" + String.valueOf(isInternetAvailable()));
+
+                        if(isInternetAvailable()) {
+                            Toast.makeText(MainActivity.getContext(),
+                                    "Error at loading data - 404?", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.getContext(),
+                                    "No internet connection.", Toast.LENGTH_LONG).show();
+                        }
+
 
                         // Deletes settings to avoid this error in future
                         ((MainActivity) MainActivity.getContext()).resetSettings();
@@ -106,4 +116,18 @@ public class VolleySingleton {
             Log.d(TAG, str);
     }
 
+    // Ping for the Google servers
+    public boolean isInternetAvailable() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

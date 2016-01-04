@@ -1,8 +1,7 @@
-remove order by asc&desc
-check net connection
 movie quality, inc 3d
 email to me or x button
 
+remove order by asc&desc
 google android gridview Imageadapter refresh flickering on notifyDataSetChanged
 google baseadapter preload images
 fix loading semi-bug

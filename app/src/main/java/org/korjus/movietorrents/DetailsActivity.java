@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.List;
@@ -113,8 +114,8 @@ public class DetailsActivity extends AppCompatActivity {
                         startActivity(goToMarket);
                     } catch (android.content.ActivityNotFoundException e) {
                         // Search torrent aps in web if there's no play store installed
-                        Intent goToWebMarket = new Intent(Intent.ACTION_VIEW)
-                                .setData(Uri.parse("https://play.google.com/store/search?q=torrent"));
+                        Intent goToWebMarket = new Intent(Intent.ACTION_VIEW).setData(Uri
+                                .parse("https://play.google.com/store/search?q=torrent"));
                         startActivity(goToWebMarket);
                     }
                 }
@@ -123,7 +124,8 @@ public class DetailsActivity extends AppCompatActivity {
             final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                     .coordinatorLayout);
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, "Didn't find any torrent application.", Snackbar.LENGTH_LONG)
+                    .make(coordinatorLayout, "Didn't find any torrent application.",
+                            Snackbar.LENGTH_LONG)
                     .setAction("Download", onClickListener)
                     .setActionTextColor(ContextCompat.getColor(this, R.color.colorAccent));
             snackbar.show();
@@ -131,16 +133,42 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void downloadTorrent() {
-        File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "Movie Torrents" + File.separator);
+        final File directory = new File(Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                + File.separator + "Movie Torrents" + File.separator);
         File path = new File(directory, movie.getFileName());
         // have the object build the directory structure, if needed.
         directory.mkdirs();
 
+        // If file exists
         if(path.exists()){
             Log.d(TAG, "File exists!");
-            Snackbar.make(this.findViewById(android.R.id.content),
-                    "File already exists in \nDownloads/Movie Torrents", Snackbar.LENGTH_LONG).show();
+            // Snackbar browse button click listener
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        // Try to browse downloads/Movie Torrents directory
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setDataAndType(Uri.parse(directory.toString()),"*/*");
+                        startActivity(Intent.createChooser(intent, "Open folder"));
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                    }
+                }
+            };
+
+            // Show snackbar with button
+            final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                    .coordinatorLayout);
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "File already exists in \nDownloads/Movie Torrents",
+                            Snackbar.LENGTH_LONG)
+                    .setAction("Browse", onClickListener)
+                    .setActionTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+            snackbar.show();
         } else {
+            // If file doesn't exist
             // Download torrent to downloads/Movie Torrents directory.
             DownloadManager.Request request = new DownloadManager
                     .Request(Uri.parse(movie.getTorrentUrl()));
@@ -160,9 +188,8 @@ public class DetailsActivity extends AppCompatActivity {
             Log.d(TAG, "Downloading torrent file, " +
                     movie.getFileName() + ", from: " + movie.getTorrentUrl());
             Snackbar.make(this.findViewById(android.R.id.content),
-                    "Downloading", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            // todo open dir
+                    "Downloading...", Snackbar.LENGTH_LONG)
+                    .show();
         }
     }
 
@@ -222,7 +249,8 @@ public class DetailsActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 break;
             case R.id.menu_update:
-                String updateUrl = "https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0";
+                String updateUrl =
+                        "https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0";
                 Intent checkUpdates = new Intent(Intent.ACTION_VIEW);
                 checkUpdates.setData(Uri.parse(updateUrl));
                 startActivity(checkUpdates);
