@@ -25,12 +25,6 @@
         android:id="@+id/menu_custom"
         android:title="Custom Sort Order" />
     <item
-        android:id="@+id/menu_latest"
-        android:title="Latest Movies" />
-    <item
-        android:id="@+id/menu_top_rated"
-        android:title="Top Rated Movies" />
-    <item
         android:id="@+id/menu_update"
         android:title="Check for Updates" />
 </menu>

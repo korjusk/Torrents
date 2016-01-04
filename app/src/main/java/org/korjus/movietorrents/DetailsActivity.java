@@ -15,7 +15,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -102,7 +101,6 @@ public class DetailsActivity extends AppCompatActivity {
                     movie.getFileName() + ", from: " + movie.getMagnetTorrent());
         } else {
             // If there's no activities that can handle magnet torrent links
-
             // Snackbar download button click listener
             View.OnClickListener onClickListener = new View.OnClickListener() {
                 @Override
@@ -121,6 +119,7 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             };
 
+            // Show snackbar with Download button
             final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                     .coordinatorLayout);
             Snackbar snackbar = Snackbar
@@ -137,7 +136,7 @@ public class DetailsActivity extends AppCompatActivity {
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 + File.separator + "Movie Torrents" + File.separator);
         File path = new File(directory, movie.getFileName());
-        // have the object build the directory structure, if needed.
+        // Have the object build the directory structure, if needed.
         directory.mkdirs();
 
         // If file exists
@@ -158,7 +157,7 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             };
 
-            // Show snackbar with button
+            // Show snackbar with Browse button
             final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                     .coordinatorLayout);
             Snackbar snackbar = Snackbar
@@ -197,16 +196,22 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        // Load settings
         SharedPreferences settings = getSharedPreferences("settings", 0);
 
         boolean isHdPoster = settings.getBoolean("hdPoster", false);
         boolean isMenuMagnet = settings.getBoolean("menu_magnet", false);
+        String movieQuality = settings.getString("movieQuality", "1080p");
 
-        MenuItem hd = menu.findItem(R.id.menu_hd);
+        // Find menu item's
+        MenuItem hdPoster = menu.findItem(R.id.menu_hd);
         MenuItem magnet = menu.findItem(R.id.menu_magnet);
 
-        hd.setChecked(isHdPoster);
+        // Set menu checkbox values
+        hdPoster.setChecked(isHdPoster);
         magnet.setChecked(isMenuMagnet);
+
         return true;
     }
 
@@ -226,12 +231,6 @@ public class DetailsActivity extends AppCompatActivity {
             case R.id.menu_magnet:
                 item.setChecked(!item.isChecked());
                 editor.putBoolean("menu_magnet", item.isChecked());
-                break;
-            case R.id.menu_latest:
-                saveSettingsAndResetDb(1);
-                break;
-            case R.id.menu_top_rated:
-                saveSettingsAndResetDb(2);
                 break;
             case R.id.menu_custom:
             case R.id.menu_search:
@@ -271,35 +270,4 @@ public class DetailsActivity extends AppCompatActivity {
         goToFullScreen.putExtra("url", movie.getPosterHd());
         startActivity(goToFullScreen);
     }
-
-    public void saveSettingsAndResetDb(int sortOrder) {
-        db.close();
-        this.deleteDatabase("movieDatabase.db");
-
-        SharedPreferences settings = getSharedPreferences("settings", 0);
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.putInt("SortOrderEnum", sortOrder);
-        editor.putInt("pageNr", 1);
-        editor.putLong("nrOfItemsInDb", 0);
-        editor.apply();
-
-        ParseJson.isImageAdapterNotified = false;
-        NavUtils.navigateUpFromSameTask(this);
-    }
-
 }
-
-
-        /*
-        Log.d(TAG, "0 " + String.valueOf(Environment.getExternalStorageDirectory() + File.separator + "torrents55"));
-        Log.d(TAG, "1 " + String.valueOf(downloadsDir));
-        Log.d(TAG, "2 " + String.valueOf(downloadsDir.getPath()));
-        Log.d(TAG, "3 " + String.valueOf(downloadsDir.getAbsolutePath()));
-        Log.d(TAG, "4 " + String.valueOf(Environment.getExternalStorageDirectory()));
-        Log.d(TAG, "5 " + String.valueOf(Environment.getDataDirectory()));
-        Log.d(TAG, "6 " + String.valueOf(Environment.getDownloadCacheDirectory()));
-        Log.d(TAG, "7 " + String.valueOf(Environment.getRootDirectory()));
-        Log.d(TAG, "8 " + String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
-        Log.d(TAG, "9 " + String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "torrents55"));
-        */

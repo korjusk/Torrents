@@ -156,9 +156,3 @@ public class Movie {
     }
 
 }
-
-
-//    String rt_critics_score;
-//    String rt_critics_rating;
-//    String rt_audience_score;
-//    String rt_audience_rating;

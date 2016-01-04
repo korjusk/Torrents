@@ -22,7 +22,7 @@ public class ParseJson {
             int movieCount = data.getInt("movie_count");
             if (movieCount == 0) {
                 Toast.makeText(MainActivity.getContext(),
-                        "Didn't find any movie.", Toast.LENGTH_LONG).show();
+                        "Didn't find any movies.", Toast.LENGTH_LONG).show();
                 mainActivity.resetSettings();
 
                 Intent goToCustomMenu = new Intent(MainActivity.getContext(), SearchActivity.class);
@@ -32,6 +32,8 @@ public class ParseJson {
 
             } else {
                 JSONArray arrayMovies = data.getJSONArray("movies");
+                String movieQuality = mainActivity.getMovieQuality();
+
                 for (int i = 0; i < arrayMovies.length(); i++) {
                     JSONObject currentMovie = arrayMovies.getJSONObject(i);
                     genres.delete(0, 999);
@@ -70,7 +72,7 @@ public class ParseJson {
                         int tPeers = currentTorrent.getInt("peers");
                         double tSize_bytes = currentTorrent.getDouble("size_bytes");
 
-                        if (tQuality.equals("1080p")) {
+                        if (tQuality.equals(movieQuality)) {
                             // Add data to database
                             long NrOfItemsInDb = cupboard()
                                     .withDatabase(mainActivity.getDb()).put(new Movie
@@ -94,14 +96,3 @@ public class ParseJson {
         }
     }
 }
-
-                /*
-                String rt_critics_score = currentMovie.getString("rt_critics_score");
-                String rt_critics_rating = currentMovie.getString("rt_critics_rating");
-                String rt_audience_score = currentMovie.getString("rt_audience_score");
-                String rt_audience_rating = currentMovie.getString("rt_audience_rating");
-                String rt_critics_score = "88";
-                String rt_critics_rating = "89";
-                String rt_audience_score = "98";
-                String rt_audience_rating = "99";
-                */

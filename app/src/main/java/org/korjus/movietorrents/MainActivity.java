@@ -2,7 +2,6 @@ package org.korjus.movietorrents;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.wifi.WifiManager;
@@ -12,7 +11,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.Toast;
+
 import com.crashlytics.android.Crashlytics;
+
 import io.fabric.sdk.android.Fabric;
 
 
@@ -21,13 +22,14 @@ public class MainActivity extends Activity {
     private static MainActivity instance;
     private long nrOfItemsInDb = 0L;
     private int pageNr = 1;
+    private String movieQuality;
     private String customUrl;
     private SQLiteDatabase db;
     private MainImageAdapter mainImageAdapter;
     private GridView gridView;
-    private SortOrderEnum sortOrderEnum = SortOrderEnum.DEFAULT;
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
+    private boolean fromSearchActivity;
 
     public MainActivity() {
         // Set's context.
@@ -66,9 +68,13 @@ public class MainActivity extends Activity {
 
     private void loadSettings() {
         pageNr = settings.getInt("pageNr", 1);
-        sortOrderEnum = SortOrderEnum.fromInteger(settings.getInt("SortOrderEnum", 0));
+        fromSearchActivity = settings.getBoolean("fromSearchActivity", false);
         Movie.isPosterHd = settings.getBoolean("hdPoster", false);
         nrOfItemsInDb = settings.getLong("nrOfItemsInDb", 0);
+        movieQuality = settings.getString("movieQuality", "1080p");
+        customUrl = settings.getString("customUrl", null);
+
+        Log.d(TAG, "Load Settings: " + settings.getAll().toString());
     }
 
     private void InstantiateDatabaseHelper() {
@@ -80,7 +86,7 @@ public class MainActivity extends Activity {
         // Download Json if there's no data in database
         if (pageNr == 1) {
             VolleySingleton.getInstance(MainActivity.getContext())
-                    .startDownload(getUrl(sortOrderEnum), DataTypeEnum.HOME);
+                    .startDownload(getUrl(), DataTypeEnum.HOME);
         }
     }
 
@@ -92,7 +98,7 @@ public class MainActivity extends Activity {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
                 VolleySingleton.getInstance(MainActivity.getContext())
-                        .startDownload(getUrl(sortOrderEnum), DataTypeEnum.HOME);
+                        .startDownload(getUrl(), DataTypeEnum.HOME);
                 return true;
             }
         });
@@ -105,9 +111,9 @@ public class MainActivity extends Activity {
     }
 
     public void resetSettings() {
-        editor.putInt("SortOrderEnum", 1);
         editor.putInt("pageNr", 1);
         editor.putLong("nrOfItemsInDb", 0);
+        editor.putBoolean("fromSearchActivity", false);
         editor.apply();
         ParseJson.isImageAdapterNotified = false;
     }
@@ -123,9 +129,11 @@ public class MainActivity extends Activity {
         super.onStop();
         editor.putLong("nrOfItemsInDb", nrOfItemsInDb);
         editor.putString("customUrl", customUrl);
+        editor.putString("movieQuality", movieQuality);
+        editor.putBoolean("fromSearchActivity", fromSearchActivity);
         editor.apply();
-        Log.d(TAG, "onStop Settings: " + settings.getAll().toString());
 
+        //Log.d(TAG, "onStop Settings: " + settings.getAll().toString());
     }
 
     public int getDisplayWith() {
@@ -134,44 +142,19 @@ public class MainActivity extends Activity {
         return metrics.widthPixels;
     }
 
-    private void getCustomUrl() {
-        Intent intent = getIntent();
-        String CustomUrlFromIntent = intent.getStringExtra("customUrl");
-        if(CustomUrlFromIntent != null) {
-            customUrl = CustomUrlFromIntent;
-            editor.putString("customUrl", customUrl);
-            editor.apply();
-        }
-        if(customUrl == null){
-            customUrl = settings.getString("customUrl",
-                    "https://yts.ag/api/v2/list_movies.json?quality=1080p");
-        }
-    }
-
-    private String getUrl(SortOrderEnum sortOrderEnum) {
-        final String BASE_URL = "https://yts.ag/api/v2/list_movies.json?quality=1080p&";
+    private String getUrl() {
+        final String BASE_URL = "https://yts.ag/api/v2/list_movies.json?quality=";
+        final String DEFAULT_SORT_ORDER = "&sort_by=date_added&minimum_rating=6";
         String pageWithNr = "&page=" + String.valueOf(pageNr);
         increasePageNr();
 
-        switch (sortOrderEnum) {
-            case DEFAULT:
-                return BASE_URL + "sort_by=like_count&minimum_rating=6" + pageWithNr;
-            case LATEST:
-                Log.d(TAG, BASE_URL + "sort_by=date_added" + pageWithNr);
-                return BASE_URL + "sort_by=date_added" + pageWithNr;
-            case TOP_RATED:
-                return BASE_URL + "sort_by=rating" + pageWithNr;
-            case MOST_SEEDED:
-                Log.d(TAG, BASE_URL + "sort_by=seeds" + pageWithNr);
-                return BASE_URL + "sort_by=seeds" + pageWithNr;
-            case CUSTOM:
-                if(customUrl == null){
-                    getCustomUrl();
-                }
-                Log.d(TAG, customUrl + pageWithNr);
-                return customUrl + pageWithNr;
+        if (fromSearchActivity){
+            // Custom search
+            return customUrl + pageWithNr;
+        } else {
+            // Default URL
+            return BASE_URL + movieQuality + DEFAULT_SORT_ORDER + pageWithNr;
         }
-        return "error at getURL";
     }
 
     public GridView getGridView() {
@@ -196,5 +179,9 @@ public class MainActivity extends Activity {
 
     public void setNrOfItemsInDb(long nrOfItemsInDb) {
         this.nrOfItemsInDb = nrOfItemsInDb;
+    }
+
+    public String getMovieQuality() {
+        return movieQuality;
     }
 }

@@ -104,43 +104,48 @@ public class DetailsFragment extends Fragment {
 
 
     public void updateUI(DetailsData detailsData) {
-        // Find Views
-        TextView tvPlot = (TextView) getView().findViewById(R.id.tvPlot);
-        TextView tvTagline = (TextView) getView().findViewById(R.id.tvTagline);
-        TextView tvBudget = (TextView) getView().findViewById(R.id.tvBudgetV);
-        TextView tvRevenue = (TextView) getView().findViewById(R.id.tvRevenueV);
-        TextView tvProduction = (TextView) getView().findViewById(R.id.tvProductionV);
+        // Check getView to avoid null pointer error
+        if (getView() != null) {
+            // Find Views
+            TextView tvPlot = (TextView) getView().findViewById(R.id.tvPlot);
+            TextView tvTagline = (TextView) getView().findViewById(R.id.tvTagline);
+            TextView tvBudget = (TextView) getView().findViewById(R.id.tvBudgetV);
+            TextView tvRevenue = (TextView) getView().findViewById(R.id.tvRevenueV);
+            TextView tvProduction = (TextView) getView().findViewById(R.id.tvProductionV);
 
-        // Update values
-        tvPlot.setText(detailsData.getOverview());
-        tvTagline.setText(detailsData.getTagline());
-        if (!detailsData.getBudget().equals("0")) {
-            tvBudget.setText(Html.fromHtml
-                    ("Budget: " + "<font color=\"#000000\">" +
-                            detailsData.getBudget() + "</font>" + "m"));
-        } else {
-            tvBudget.setVisibility(View.GONE);
+            // Update values
+            tvPlot.setText(detailsData.getOverview());
+            tvTagline.setText(detailsData.getTagline());
+            if (!detailsData.getBudget().equals("0")) {
+                tvBudget.setText(Html.fromHtml
+                        ("Budget: " + "<font color=\"#000000\">" +
+                                detailsData.getBudget() + "</font>" + "m"));
+            } else {
+                tvBudget.setVisibility(View.GONE);
+            }
+            if (!detailsData.getRevenue().equals("0")) {
+                tvRevenue.setText(Html.fromHtml
+                        ("Revenue: " + "<font color=\"#000000\">" +
+                                detailsData.getRevenue() + "</font>" + "m"));
+            } else {
+                tvRevenue.setVisibility(View.GONE);
+            }
+            if (!detailsData.getCountries().equals("")) {
+                tvProduction.setText(Html.fromHtml
+                        ("Countries: " + "<font color=\"#000000\">" +
+                                detailsData.getCountries() + "</font>"));
+            } else {
+                tvProduction.setVisibility(View.GONE);
+            }
         }
-        if (!detailsData.getRevenue().equals("0")) {
-            tvRevenue.setText(Html.fromHtml
-                    ("Revenue: " + "<font color=\"#000000\">" +
-                            detailsData.getRevenue() + "</font>" + "m"));
-        } else {
-            tvRevenue.setVisibility(View.GONE);
-        }
-        if (!detailsData.getCountries().equals("")) {
-            tvProduction.setText(Html.fromHtml
-                    ("Countries: " + "<font color=\"#000000\">" +
-                            detailsData.getCountries() + "</font>"));
-        } else {
-            tvProduction.setVisibility(View.GONE);
-        }
-
     }
 
     public void setCreditsImageVisible() {
-        RecyclerView rvContacts = (RecyclerView) getView().findViewById(R.id.rvCreditsContainer);
-        rvContacts.setVisibility(View.VISIBLE);
+        // Check getView to avoid null pointer error
+        if (getView() != null) {
+            RecyclerView rvContacts = (RecyclerView) getView().findViewById(R.id.rvCreditsContainer);
+            rvContacts.setVisibility(View.VISIBLE);
+        }
     }
 
     public CreditsImageAdapter getAdapter() {

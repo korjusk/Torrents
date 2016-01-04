@@ -45,19 +45,22 @@
         <item>Western</item>
     </string-array>
 
+    <!--todo sort by, sort order, order by, filter by. etc.-->
     <string-array name="array_sort_by">
         <item>Date added</item>
-        <item>Title</item>
-        <item>Year</item>
         <item>Rating</item>
-        <!--    <item>Peers</item>
-                <item>Seeds</item>-->
         <item>Download count</item>
-        <!--<item>Like count</item>-->
+        <item>Newest first</item>
+        <item>Oldest first</item>
+        <item>Alphabetically</item>
+        <!--    <item>Peers</item>
+        <item>Seeds</item>
+        <item>Like count</item>-->
     </string-array>
 
-    <string-array name="array_order_by">
-        <item>Descending</item>
-        <item>Ascending</item>
+    <string-array name="array_movie_quality">
+        <item>1080p</item>
+        <item>720p</item>
+        <item>3D</item>
     </string-array>
 </resources>
