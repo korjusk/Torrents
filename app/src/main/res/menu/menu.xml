@@ -8,6 +8,11 @@
         android:title="Search"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menu_email"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/sym_action_email"
+        android:title="Email the info" />
+    <item
         android:id="@+id/menu_share"
         android:actionProviderClass="android.widget.ShareActionProvider"
         android:icon="@android:drawable/ic_menu_share"

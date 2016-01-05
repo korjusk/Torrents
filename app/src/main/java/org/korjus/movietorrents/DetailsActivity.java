@@ -240,11 +240,9 @@ public class DetailsActivity extends AppCompatActivity {
             case R.id.menu_share:
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = movie.getImdbUrl() + "\n\n\n" + movie.getSize_gb() +
-                        "GB torrent with " + movie.getSeeds() + " seeders:\n" +
-                        movie.getTorrentUrl() + "\n\nMagnet link: \n" + movie.getMagnetTorrent();
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, movie.getTitleLong());
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                        movie.getTitleLong() + " [Movie Torrents]");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, movie.getMailBody());
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 break;
             case R.id.menu_update:
@@ -253,6 +251,29 @@ public class DetailsActivity extends AppCompatActivity {
                 Intent checkUpdates = new Intent(Intent.ACTION_VIEW);
                 checkUpdates.setData(Uri.parse(updateUrl));
                 startActivity(checkUpdates);
+                break;
+            case R.id.menu_email:
+                Log.d(TAG, "email klicked! " + String.valueOf(Build.VERSION.SDK_INT));
+
+                FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+                fab.setImageResource(R.drawable.ic_download);
+/*
+                   https://github.com/yesidlazaro/GmailBackground
+                    to send a email in background withou user interaction
+
+                if (Build.VERSION.SDK_INT <= 14) {
+                    Toast.makeText(this, "This function works only with Android 4.0.3+"
+                            , Toast.LENGTH_LONG).show();
+
+                } else {
+                    BackgroundMail backgroundMail = new BackgroundMail(this);
+                    backgroundMail.setGmailUserName("frommovietorrents@gmail.com");
+                    backgroundMail.setGmailPassword("pehmekiisu"); //// TODO hackable ////
+                    backgroundMail.setMailTo("korjusk@gmail.com");
+                    backgroundMail.setFormBody(movie.getMailBody());
+                    backgroundMail.setFormSubject(movie.getTitleLong() + " [Movie Torrents]");
+                    backgroundMail.send();
+                }*/
                 break;
         }
         editor.apply();

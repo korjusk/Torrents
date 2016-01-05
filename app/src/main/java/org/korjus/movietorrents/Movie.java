@@ -155,4 +155,12 @@ public class Movie {
         return slug;
     }
 
+    public String getMailBody() {
+        return getImdbUrl() +
+                "\n\n" + getSize_gb() + "GB torrent with " + getSeeds() + " seeders:\n"
+                + getTorrentUrl() +
+                "\n\nMagnet link: \n"
+                + getMagnetTorrent();
+    }
+
 }
