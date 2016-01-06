@@ -1,8 +1,9 @@
 # Movie Torrents
-Browse and download movie torrents with guaranteed quality. 
-
+Browse and download movie torrents with guaranteed quality.   
+  
+##### Download
 Download the latest **installer**.apk and open it in the phone:
-https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0
+https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0  
 
 
 ##### Follow instructions to download movies to computer:
@@ -13,9 +14,9 @@ Automatically synchronize .torrent file with [googlde drive] (http://www.mzdhr.c
 Or you can activate magnet links in settings menu and use [**uTorrent remote.**] (http://www.utorrent.com/remote/)
 Or just download movies to your phone with any [torrent client.] (https://play.google.com/store/apps/details?id=com.delphicoder.flud)
 
-It's also possible share movie and torrent info with email, facebook, google+ and with tons of other apps.
+It's also possible share movie and torrent info with email, facebook, google+ and with tons of other apps.  
 
-###### Features:
+##### Features:
 - Endless scroll
 - Search, filter and sort movies.
 - Change torrent quality. (FULL HD, HD, 3D)
