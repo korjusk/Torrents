@@ -3,8 +3,7 @@ Browse movies and download torrents with guaranteed quality.
 <br><br>
   
 ##### Download:
-Download the latest installer.apk and open it in the phone:
-https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0  
+[Download the latest installer.apk] (https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0) and open it in the phone.
 <br><br>
 
 ##### Instructions to download movies to computer.
