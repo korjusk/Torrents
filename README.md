@@ -1,5 +1,5 @@
-# Movie Torrents
-Browse and download movie torrents with guaranteed quality.   
+## Movie Torrents
+Browse movies and download torrents with guaranteed quality.   
 <br><br>
   
 ##### Download:
