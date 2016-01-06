@@ -1,11 +1,11 @@
 # Movie Torrents
 Browse and download movie torrents with guaranteed quality.   
- < br /> < br /> < br />
+<br> < br /> < br /> < br />
   
 ##### Download
 Download the latest **installer**.apk and open it in the phone:
 https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0  
-
+<br><br><br>
 
 ##### Follow instructions to download movies to computer:
 Automatically synchronize .torrent file with [googlde drive] (http://www.mzdhr.com/2015/05/how-to-download-torrent-files-remotely.html), [dropbox] (http://www.guidingtech.com/19135/auto-start-torrents-download-remotely-dropbox-bittorrent) and [dropsyn] (https://play.google.com/store/apps/details?id=com.ttxapps.dropsync
