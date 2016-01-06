@@ -9,8 +9,8 @@ https://www.dropbox.com/sh/6afaza65f37mlze/AADXVimhKAZDzw7d9Fc_QTuXa?dl=0
 
 ##### Instructions to download movies to computer.
 Automatically synchronize .torrent file with: 
-- [googlde drive] (http://www.mzdhr.com/2015/05/how-to-download-torrent-files-remotely.html)
-- [dropbox] (http://www.guidingtech.com/19135/auto-start-torrents-download-remotely-dropbox-bittorrent) and [dropsyn] (https://play.google.com/store/apps/details?id=com.ttxapps.dropsync)
+- [Googlde drive] (http://www.mzdhr.com/2015/05/how-to-download-torrent-files-remotely.html)
+- [Dropbox] (http://www.guidingtech.com/19135/auto-start-torrents-download-remotely-dropbox-bittorrent) and [Dropsyn] (https://play.google.com/store/apps/details?id=com.ttxapps.dropsync)
 - Or you can activate magnet links in settings menu and use [**uTorrent remote.**] (http://www.utorrent.com/remote/)
 - It's also possible share movie and torrent info with email, facebook, google+ and with tons of other apps.  
 <br><br>
