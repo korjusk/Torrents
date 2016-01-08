@@ -21,6 +21,7 @@ public class MainImageAdapter extends BaseAdapter {
     private int posterWidth;
     private int posterHeight;
 
+    // Pass in the context into the constructor and calculate image size
     public MainImageAdapter(Context c, int displayWidth) {
         context = c;
         mainActivity = (MainActivity) context;
@@ -38,24 +39,22 @@ public class MainImageAdapter extends BaseAdapter {
         String src = movie.getPoster();
 
         if (convertView == null) {
-            // Kui bug tekkis siis k6ik peale teise korra j6udisd siia
-            // if it's not recycled, initialize some attributes
+            // If it's not recycled, initialize some attributes
             imageView = new ImageView(context);
             imageView.setLayoutParams(new GridView.LayoutParams(posterWidth, posterHeight));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         } else {
             imageView = (ImageView) convertView;
-            // When you get a recycled item, check if it's not already the one you want to display.
+            // When you get a recycled item, check if it's not already the one you want to display
             String newSrc = (String) imageView.getTag();
             if (src.equals(newSrc)) {
-                // If so, return it directly.
+                // If so, return it directly
                 return imageView;
             }
         }
         // Load images to gridView with picasso
         if (mainActivity.getNrOfItemsInDb() > 0) {
 
-            // Kui bug tekkis siis URL oli 6ige kuid ei laadinud pilti imageViewi
             Picasso.with(mainActivity)
                     .load(movie.getPoster())
                     .placeholder(R.drawable.placeholder)
@@ -81,11 +80,6 @@ public class MainImageAdapter extends BaseAdapter {
         });
 
         return imageView;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
     }
 
     public int getCount() {

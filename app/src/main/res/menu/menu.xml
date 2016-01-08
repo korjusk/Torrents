@@ -5,31 +5,19 @@
     <item
         android:id="@+id/menu_search"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Search"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menu_email"
-        app:showAsAction="ifRoom"
-        android:icon="@android:drawable/sym_action_email"
-        android:title="Email the info" />
-    <item
-        android:id="@+id/menu_share"
-        android:actionProviderClass="android.widget.ShareActionProvider"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="Share"
+        android:title="@string/menu_search"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_hd"
         android:checkable="true"
-        android:title="HD poster's" />
-    <item
-        android:id="@+id/menu_magnet"
-        android:checkable="true"
-        android:title="Magnet Link's" />
+        android:title="@string/menu_hd_poster_s" />
     <item
         android:id="@+id/menu_custom"
-        android:title="Custom Sort Order" />
+        android:title="@string/menu_custom_sort_order" />
     <item
         android:id="@+id/menu_update"
-        android:title="Check for Updates" />
+        android:title="@string/menu_check_for_updates" />
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/menu_settings" />
 </menu>

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2a2a2a"
-    tools:context=".PosterPopupActivity" />
+    tools:context=".PosterPopupActivity"
+    android:contentDescription="@string/full_screen_poster" />
 
 

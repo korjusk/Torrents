@@ -12,11 +12,11 @@ import android.widget.Spinner;
 // It's used to search movies or apply custom sorting for home page GridView
 public class SearchActivity extends Activity {
     private static final String TAG = "u8i9 SearchActivity";
-    EditText etSearch;
-    Spinner spnImdbRating;
-    Spinner spnGenres;
-    Spinner spnSortBy;
-    Spinner spnMovieQuality;
+    private EditText etSearch;
+    private Spinner spnImdbRating;
+    private Spinner spnGenres;
+    private Spinner spnSortBy;
+    private Spinner spnMovieQuality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,8 @@ public class SearchActivity extends Activity {
 
         // Add to URL everything that is inserted by user
 
-        if (spnMovieQuality.getSelectedItemId() == 2){
+        // Quality
+        if (spnMovieQuality.getSelectedItemId() == 2) {
             url.append("3D"); ////   Needs to be in upper case   ////
             editor.putString("movieQuality", "3D");
         } else if (spnMovieQuality.getSelectedItemId() == 1) {
@@ -77,21 +78,26 @@ public class SearchActivity extends Activity {
             editor.putString("movieQuality", "1080p");
         }
 
+        // Search term
         if (searchValue.trim().length() > 0) {
             url.append("&query_term=")
                     .append(searchValue.replace(" ", "%20").toLowerCase());
         }
 
+        // IMDb rating
         if (imdbRating > 0) {
             url.append("&minimum_rating=")
                     .append(imdbRating + 1);
         }
 
+        // Genres
         if (spnGenres.getSelectedItemId() > 0) {
             url.append("&genre=")
                     .append(spnGenres.getSelectedItem().toString().toLowerCase());
         }
 
+
+        // Sort order
         if (spnSortBy.getSelectedItemId() > 0) {
             url.append("&sort_by=");
 
@@ -116,9 +122,8 @@ public class SearchActivity extends Activity {
 
         }
 
-        // Close and delete Database so I could be recreated
-        ((MainActivity) MainActivity.getContext())
-                .getDb().close();
+        // Close and delete Database so It could be recreated
+        ((MainActivity) MainActivity.getContext()).getDb().close();
         this.deleteDatabase("movieDatabase.db");
 
         // Save settings
@@ -129,7 +134,7 @@ public class SearchActivity extends Activity {
         ParseJson.isImageAdapterNotified = false;
         editor.apply();
 
-        // Start new search intent
+        // Start Main Activity with custom url where from data can be downloaded
         Intent goToHome = new Intent(this, MainActivity.class);
         goToHome.putExtra("customUrl", url.toString());
         startActivity(goToHome);

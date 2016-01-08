@@ -8,13 +8,13 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 // Uses Cupboard to handle SQLite database
 // Documentation: https://bitbucket.org/littlerobots/cupboard/wiki/Home
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "u8i9 DatabaseHelper";
     private static final String DATABASE_NAME = "movieDatabase.db";
     private static final int DATABASE_VERSION = 1;
 
     static {
-        // register our models
+        // Register our models
         cupboard().register(Movie.class);
     }
 
@@ -24,24 +24,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // this will ensure that all tables are created
+        // This will ensure that all tables are created
         cupboard().withDatabase(db).createTables();
-        // add indexes and other database tweaks in this method if you want
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // this will upgrade tables, adding columns and new tables.
+        // This will upgrade tables, adding columns and new tables.
         // Note that existing columns will not be converted
         cupboard().withDatabase(db).upgradeTables();
-        // do migration work if you have an alteration to make to your schema here
-
     }
-
 }
-
-
-
-
-

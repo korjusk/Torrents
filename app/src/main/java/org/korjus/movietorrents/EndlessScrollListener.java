@@ -3,16 +3,16 @@ package org.korjus.movietorrents;
 import android.widget.AbsListView;
 
 
-public abstract class EndlessScrollListener implements AbsListView.OnScrollListener {
+abstract class EndlessScrollListener implements AbsListView.OnScrollListener {
     private static final String TAG = "u8i9 EndlessScrollL";
     // The minimum amount of items to have below your current scroll position
-    // before loading more.
+    // before loading more
     private int visibleThreshold = 10;
     // The current offset index of data you have loaded
     private int currentPage = 0;
     // The total number of items in the dataset after the last load
     private int previousTotalItemCount = 0;
-    // True if we are still waiting for the last set of data to load.
+    // True if we are still waiting for the last set of data to load
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;

@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class DetailsData {
     private static final String TAG = "u8i9 DetailsData";
     public static ArrayList<Credits> credits = new ArrayList<>();
-    int budget;
-    String overview;
-    long revenue;
-    String tagline;
-    String title;
-    StringBuilder countries = new StringBuilder();
-    JSONObject nextItem;
+    private int budget;
+    private String overview;
+    private long revenue;
+    private String tagline;
+    private String title;
+    private StringBuilder countries = new StringBuilder();
+    private JSONObject nextItem;
 
     // Decodes json into DetailsData object
     public static DetailsData fromJson(JSONObject response) {
@@ -70,12 +70,6 @@ public class DetailsData {
 
     }
 
-
-    @Override
-    public String toString() {
-        return "title: " + title;
-    }
-
     public String getTagline() {
         return tagline;
     }
@@ -99,14 +93,12 @@ public class DetailsData {
 
     // Inner class for credits
     public class Credits {
-        private static final String TAG = "u8i9 Credits";
         String name;
         String poster;
 
         public Credits(String name, String poster) {
             this.name = name;
             this.poster = poster;
-
         }
 
         public String getName() {
@@ -117,13 +109,6 @@ public class DetailsData {
             return "http://image.tmdb.org/t/p/w342" + poster;
         }
 
-        @Override
-        public String toString() {
-            return "Credits{" +
-                    "name='" + name + '\'' +
-                    ", poster='" + poster + '\'' +
-                    '}';
-        }
     }
 
 }

@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
     private MainImageAdapter mainImageAdapter;
     private GridView gridView;
     private SharedPreferences settings;
-    private SharedPreferences.Editor editor;
     private boolean fromSearchActivity;
 
     public MainActivity() {
@@ -42,9 +41,7 @@ public class MainActivity extends Activity {
         // Crash reporting API, https://docs.fabric.io/
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-
         settings = getSharedPreferences("settings", 0);
-        editor = settings.edit();
 
         warnIfWifiDisabled();
         loadSettings();
@@ -53,7 +50,22 @@ public class MainActivity extends Activity {
         setImageAdapterAndOnScrollListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadSettings();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong("nrOfItemsInDb", nrOfItemsInDb);
+        editor.putString("customUrl", customUrl);
+        editor.putString("movieQuality", movieQuality);
+        editor.putBoolean("fromSearchActivity", fromSearchActivity);
+        editor.apply();
+    }
 
     private void warnIfWifiDisabled() {
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
@@ -73,8 +85,6 @@ public class MainActivity extends Activity {
         nrOfItemsInDb = settings.getLong("nrOfItemsInDb", 0);
         movieQuality = settings.getString("movieQuality", "1080p");
         customUrl = settings.getString("customUrl", null);
-
-        Log.d(TAG, "Load Settings: " + settings.getAll().toString());
     }
 
     private void InstantiateDatabaseHelper() {
@@ -82,7 +92,7 @@ public class MainActivity extends Activity {
         db = dbHelper.getWritableDatabase();
     }
 
-    public void downloadData() {
+    private void downloadData() {
         // Download Json if there's no data in database
         if (pageNr == 1) {
             VolleySingleton.getInstance(MainActivity.getContext())
@@ -106,34 +116,18 @@ public class MainActivity extends Activity {
 
     private void increasePageNr() {
         pageNr++;
+        SharedPreferences.Editor editor = settings.edit();
         editor.putInt("pageNr", pageNr);
         editor.apply();
     }
 
     public void resetSettings() {
+        SharedPreferences.Editor editor = settings.edit();
         editor.putInt("pageNr", 1);
         editor.putLong("nrOfItemsInDb", 0);
         editor.putBoolean("fromSearchActivity", false);
         editor.apply();
         ParseJson.isImageAdapterNotified = false;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadSettings();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        editor.putLong("nrOfItemsInDb", nrOfItemsInDb);
-        editor.putString("customUrl", customUrl);
-        editor.putString("movieQuality", movieQuality);
-        editor.putBoolean("fromSearchActivity", fromSearchActivity);
-        editor.apply();
-
-        //Log.d(TAG, "onStop Settings: " + settings.getAll().toString());
     }
 
     public int getDisplayWith() {

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded,RtlSymmetry"
+    >
+
+    <!-- Layout for Settings Activity. User can choose download buttons action. -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="org.korjus.movietorrents.SettingsActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="@string/button_action"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- 1. Download torrent file. (default) -->
+        <RelativeLayout
+            android:id="@+id/rlDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/ivDefault"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_download"
+                android:contentDescription="@string/download_icon" />
+
+            <RadioButton
+                android:id="@+id/rbDefault"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:clickable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/rbDefault"
+                android:layout_toRightOf="@id/ivDefault"
+                android:paddingLeft="8dp"
+                android:text="@string/download_torrent_file_to_downloads_movie_torrents"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <!-- 2. Open magnet link -->
+        <RelativeLayout
+            android:id="@+id/rlMagnet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/ivMagnet"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_magnet"
+                android:contentDescription="@string/magnet_icon" />
+
+            <RadioButton
+                android:id="@+id/rbMagnet"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:clickable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/rbMagnet"
+                android:layout_toRightOf="@id/ivMagnet"
+                android:paddingLeft="8dp"
+                android:text="@string/open_magnet_link"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <!-- 3. Share torrent link's -->
+        <RelativeLayout
+            android:id="@+id/rlShare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/ivShare"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_share"
+                android:contentDescription="@string/share_icon" />
+
+            <RadioButton
+                android:id="@+id/rbShare"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:clickable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/rbShare"
+                android:layout_toRightOf="@id/ivShare"
+                android:paddingLeft="8dp"
+                android:text="@string/share_movie_links"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <!-- 4. Mail torrent -->
+        <RelativeLayout
+            android:id="@+id/rlMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/ivMail"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_mail"
+                android:contentDescription="@string/mail_icon" />
+
+            <RadioButton
+                android:id="@+id/rbMail"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:clickable="false" />
+
+            <TextView
+                android:id="@+id/tvMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/rbMail"
+                android:layout_toRightOf="@id/ivMail"
+                android:paddingLeft="8dp"
+                android:text="@string/mail_movie_links_to"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/etMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvMail"
+                android:layout_marginBottom="16dp"
+                android:layout_toLeftOf="@id/rbMail"
+                android:layout_toRightOf="@id/ivMail"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="8dp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

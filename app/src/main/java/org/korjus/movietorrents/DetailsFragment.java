@@ -16,9 +16,9 @@ import com.squareup.picasso.Picasso;
 
 public class DetailsFragment extends Fragment {
     private static final String TAG = "u8i9 DetailsFragment";
-    CreditsImageAdapter adapter;
-    Movie movie;
-    MainActivity mainActivity;
+    private CreditsImageAdapter adapter;
+    private Movie movie;
+    private MainActivity mainActivity;
 
     public DetailsFragment() {
     }
@@ -80,28 +80,22 @@ public class DetailsFragment extends Fragment {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         // Control orientation of the items
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-
-
         // Lookup the RecyclerView in activity layout
         RecyclerView rvContacts = (RecyclerView) view.findViewById(R.id.rvCreditsContainer);
         // Empty list before adding to adapter
         DetailsData.credits.clear();
         // Create adapter passing in the data
         adapter = new CreditsImageAdapter(DetailsData.credits);
-
         // Set layout manager to position the items
         rvContacts.setLayoutManager(layoutManager);
-
         // Attach the adapter to the RecyclerView to populate items
         rvContacts.setAdapter(adapter);
 
         rvContacts.getLayoutParams().height = CreditsImageAdapter.imageHeight + 70;
-        // todo update to wrap content
-
+        // TODO update wrap content
 
         return view;
     }
-
 
     public void updateUI(DetailsData detailsData) {
         // Check getView to avoid null pointer error

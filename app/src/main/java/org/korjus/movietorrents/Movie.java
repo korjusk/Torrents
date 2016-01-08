@@ -9,62 +9,47 @@ public class Movie {
     private static final String TAG = "u8i9 Movie";
     public static boolean isPosterHd = false;
     public Long _id; // for cupboard
-    int id;
-    String movieUrl;
-    String imdbCode;
-    String imdbUrl;
-    String title;
-    String titleLong;
-    String slug;
-    String year;
-    double imdbRating;
-    String runtime;
-    String trailer;
-    String language;
-    String poster;
-    String genres;
-    String torrentUrl;
-    String torrentHash;
-    int torrentSeeds;
-    int torrentPeers;
-    double torrentBytesSize;
-
-    public Movie(String genres, int id, String imdbCode, double imdbRating, String language, String trailer, String movieUrl, String poster, String runtime, String slug, String torrentHash, String title, String titleLong, int torrentPeers, int torrentSeeds, double torrentBytesSize, String torrentUrl, String year) {
-        this.genres = genres;
-        this.id = id;
-        this.imdbCode = imdbCode;
-        this.imdbRating = imdbRating;
-        this.language = language;
-        this.trailer = trailer;
-        this.movieUrl = movieUrl;
-        this.poster = poster;
-        this.runtime = runtime;
-        this.slug = slug;
-        this.torrentHash = torrentHash;
-        this.title = title;
-        this.titleLong = titleLong;
-        this.torrentPeers = torrentPeers;
-        this.torrentSeeds = torrentSeeds;
-        this.torrentBytesSize = torrentBytesSize;
-        this.torrentUrl = torrentUrl;
-        this.year = year;
-
-    }
-
-    public Movie() {
-    }
 
     static {
         // register our models
         cupboard().register(Movie.class);
     }
 
-    @Override
-    public String toString() {
-        return title +
-                "\nrating:" + imdbRating +
-                "\nposter:" + poster +
-                "\ntorrent Url:" + torrentUrl;
+    private String imdbCode;
+    private String title;
+    private String titleLong;
+    private String slug;
+    private String year;
+    private double imdbRating;
+    private String runtime;
+    private String language;
+    private String poster;
+    private String genres;
+    private String torrentUrl;
+    private String torrentHash;
+    private int torrentSeeds;
+    private double torrentBytesSize;
+
+    public Movie(String genres, String imdbCode, double imdbRating, String language, String poster,
+                 String runtime, String slug, String torrentHash, String title, String titleLong,
+                 int torrentSeeds, double torrentBytesSize, String torrentUrl, String year) {
+        this.genres = genres;
+        this.imdbCode = imdbCode;
+        this.imdbRating = imdbRating;
+        this.language = language;
+        this.poster = poster;
+        this.runtime = runtime;
+        this.slug = slug;
+        this.torrentHash = torrentHash;
+        this.title = title;
+        this.titleLong = titleLong;
+        this.torrentSeeds = torrentSeeds;
+        this.torrentBytesSize = torrentBytesSize;
+        this.torrentUrl = torrentUrl;
+        this.year = year;
+    }
+
+    public Movie() {
     }
 
     public String getPoster() {
@@ -76,8 +61,7 @@ public class Movie {
     }
 
     public String getPosterHd() {
-        String HdPoster = poster.replace("medium-cover.jpg", "large-cover.jpg");
-        return HdPoster;
+        return poster.replace("medium-cover.jpg", "large-cover.jpg");
     }
 
     public String getGenres() {
@@ -112,9 +96,8 @@ public class Movie {
 
     public String getUrlMain() {
         // http://api.themoviedb.org/3/movie/tt0137523?external_source=imdb_id&api_key=477c5c8124a39a23666fe14b445cea78&append_to_response=credits,trailers
-        String url = "http://api.themoviedb.org/3/movie/" + imdbCode +
+        return "http://api.themoviedb.org/3/movie/" + imdbCode +
                 "?external_source=imdb_id&api_key=477c5c8124a39a23666fe14b445cea78&append_to_response=credits,trailers";
-        return url;
     }
 
     public String getImdbUrl() {
@@ -132,7 +115,7 @@ public class Movie {
     }
 
     public String getTorrentUrl() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1){
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
             // Gingerbread doesn't support https
             return torrentUrl.replace("https", "http");
         }
@@ -147,11 +130,11 @@ public class Movie {
         return year;
     }
 
-    public String getTorrentHash() {
+    private String getTorrentHash() {
         return torrentHash;
     }
 
-    public String getSlug() {
+    private String getSlug() {
         return slug;
     }
 

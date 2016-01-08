@@ -6,21 +6,26 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--Disables the wrong minSDK warning-->
     <uses-sdk tools:overrideLibrary="com.creativityapps.gmailbackgroundlibrary" />
 
     <application
         android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        android:icon="@mipmap/ic_launcher">
-        <activity android:name=".MainActivity"
+        tools:replace="android:supportsRtl"
+        >
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,18 +33,27 @@
             android:name=".DetailsActivity"
             android:label="@string/title_activity_movie_details"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.korjus.movietorrents.MainActivity" />
         </activity>
-        <activity android:name=".PosterPopupActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SearchActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PosterPopupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="cc18833e3ab3591266a9457cceec3c2776af4ec4" />
+
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
+
 </manifest>

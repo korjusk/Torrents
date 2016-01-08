@@ -1,10 +1,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded">
 
+    <!-- Layout for Details Fragment. Displays movie's info. -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -35,7 +38,9 @@
                 android:layout_marginLeft="8dp"
                 android:adjustViewBounds="true"
                 android:onClick="goToFullScreen"
-                android:src="@drawable/placeholder" />
+                android:src="@drawable/placeholder"
+                android:contentDescription="@string/placeholder_for_movie_poster"
+                tools:ignore="RtlHardcoded" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp">
 
+                    <!-- Button that links to IMDb.com -->
                     <Button
                         android:id="@+id/btnImdb"
                         android:layout_width="match_parent"
@@ -67,7 +73,8 @@
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_imdb_star"
-                        android:layout_alignParentLeft="true" />
+                        android:layout_alignParentLeft="true"
+                        android:contentDescription="@string/imdb_icon" />
 
                     <TextView
                         android:id="@+id/tvRatingV"
@@ -173,7 +180,7 @@
             android:layout_marginRight="8dp"
             android:background="#d1d1d1" />
 
-
+        <!-- Credits container -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvCreditsContainer"
             android:layout_width="match_parent"

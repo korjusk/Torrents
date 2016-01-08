@@ -2,7 +2,7 @@ package org.korjus.movietorrents;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Build;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -39,10 +39,12 @@ public class VolleySingleton {
         return instance;
     }
 
+    // Download json data
     public synchronized void startDownload(final String url, final DataTypeEnum type) {
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest
                 (url, null, new Response.Listener<JSONObject>() {
 
+                    // Downloading successful! Response:
                     @Override
                     public void onResponse(JSONObject response) {
                         switch (type) {
@@ -59,9 +61,7 @@ public class VolleySingleton {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG, type.toString() + url + error.toString());
-                        Log.d(TAG, "isInternetAvailable:" + String.valueOf(isInternetAvailable()));
-
+                        // Download NOT successful
                         if(isInternetAvailable()) {
                             Toast.makeText(MainActivity.getContext(),
                                     "Error at loading data - 404?", Toast.LENGTH_LONG).show();
@@ -77,9 +77,12 @@ public class VolleySingleton {
                         Intent goToCustomMenu = new
                                 Intent(MainActivity.getContext(), SearchActivity.class);
 
-                        // Deletes backs tack to avoid this error in future
-                        goToCustomMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        // Deletes back stack so user can't come back in here.
+                        // Works only in honeycomb+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            goToCustomMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        }
 
                         // Return's back to Search Activity
                         MainActivity.getContext().startActivity(goToCustomMenu);
@@ -95,7 +98,7 @@ public class VolleySingleton {
         addToRequestQueue(jsonObjRequest);
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
@@ -104,28 +107,18 @@ public class VolleySingleton {
         return requestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
+    private <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
 
-    public static void longInfo(String str) {
-        if (str.length() > 4000) {
-            Log.d(TAG, str.substring(0, 4000));
-            longInfo(str.substring(4000));
-        } else
-            Log.d(TAG, str);
-    }
-
-    // Ping for the Google servers
-    public boolean isInternetAvailable() {
+    // Ping the Google server
+    private boolean isInternetAvailable() {
         Runtime runtime = Runtime.getRuntime();
         try {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
             int exitValue = ipProcess.waitFor();
             return (exitValue == 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return false;
