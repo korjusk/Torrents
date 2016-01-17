@@ -4,27 +4,27 @@
     <string name="etSearch_hint"><font size="12">Search by Title</font></string>
     <string name="full_screen_poster">Full Screen Poster</string>
     <string name="imdb_rating">IMDb Rating</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Genre</string>
     <string name="sort_by">Sort by</string>
     <string name="quality">Quality</string>
     <string name="search">Search</string>
     <string name="button_action">Choose the download button\'s action.</string>
-    <string name="download_torrent_file_to_downloads_movie_torrents">Download .torrent file to downloads/movie torrents</string>
+    <string name="download_torrent_file_to_downloads_movie_torrents">Download .torrent file to downloads/movie-torrents</string>
     <string name="download_icon">download icon</string>
     <string name="magnet_icon">magnet icon</string>
-    <string name="open_magnet_link">Open\'s torrent\'s magnet link</string>
+    <string name="open_magnet_link">Open torrent\'s magnet link</string>
     <string name="share_icon">share icon</string>
-    <string name="share_movie_links">Share movie links</string>
+    <string name="share_movie_links">Share links</string>
     <string name="mail_icon">mail icon</string>
-    <string name="mail_movie_links_to">Mail movie links to:</string>
+    <string name="mail_movie_links_to">E-mail links to:</string>
     <string name="placeholder_for_movie_poster">placeholder for movie poster</string>
     <string name="imdb_icon">Imdb icon</string>
     <string name="credits_image">Credits Image</string>
     <string name="menu_search">Search</string>
-    <string name="menu_check_for_updates">Check for Updates</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_custom_sort_order">Custom Sort Order</string>
-    <string name="menu_hd_poster_s">HD poster\'s</string>
+    <string name="menu_check_for_updates">Check for updates</string>
+    <string name="menu_settings">Button\'s action</string>
+    <string name="menu_custom_sort_order">Filter and sort</string>
+    <string name="menu_hd_poster_s">HD posters</string>
 
     <string-array name="array_imdb_rating">
         <item>Any</item>
