@@ -8,16 +8,16 @@
         android:title="@string/menu_search"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menu_custom"
+        android:title="@string/menu_custom_sort_order" />
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/menu_settings" />
+    <item
         android:id="@+id/menu_hd"
         android:checkable="true"
         android:title="@string/menu_hd_poster_s" />
     <item
-        android:id="@+id/menu_custom"
-        android:title="@string/menu_custom_sort_order" />
-    <item
         android:id="@+id/menu_update"
         android:title="@string/menu_check_for_updates" />
-    <item
-        android:id="@+id/menu_settings"
-        android:title="@string/menu_settings" />
 </menu>
