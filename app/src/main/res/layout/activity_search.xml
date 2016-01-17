@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/etSearch_hint"
-            android:paddingTop="16dp" />
+            android:paddingTop="16dp"
+            android:singleLine="true" />
 
         <!-- IMDb Rating -->
         <LinearLayout
