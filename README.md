@@ -2,7 +2,7 @@
 Simple and beautiful browser for all the movies with good torrents.
 <br>
 Sort and filter movies and use a single button to download the .torrent file or open magnet link. It's also possible to share movie's information and torrent links with e-mail, facebook, google+ and with tons of other apps.
-<br>
+<br><br>
 ![Thumbnail](http://i.imgur.com/ColzR57.jpg)
 <br><br>
   
