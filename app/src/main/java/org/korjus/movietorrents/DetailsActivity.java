@@ -223,12 +223,12 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    // Downloads and saves torrent to "downloads/Movie Torrents" directory
+    // Downloads and saves torrent to "downloads/Movie-Torrents" directory
     private void downloadTorrent() {
         // Directory location
         final File directory = new File(Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                + File.separator + "Movie Torrents" + File.separator);
+                + File.separator + "Movie-Torrents" + File.separator);
 
         // Have the object build the directory structure, if needed
         //noinspection ResultOfMethodCallIgnored
@@ -258,14 +258,14 @@ public class DetailsActivity extends AppCompatActivity {
             final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                     .coordinatorLayout);
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, "File already exists in \nDownloads/Movie Torrents",
+                    .make(coordinatorLayout, "File already exists in \nDownloads/Movie-Torrents",
                             Snackbar.LENGTH_LONG)
                     .setAction("Browse", onClickListener)
                     .setActionTextColor(ContextCompat.getColor(this, R.color.colorAccent));
             snackbar.show();
         } else {
             // If file doesn't exist
-            // Download torrent to downloads/Movie Torrents directory
+            // Download torrent to downloads/Movie-Torrents directory
             DownloadManager.Request request = new DownloadManager
                     .Request(Uri.parse(movie.getTorrentUrl()));
             request.setTitle(movie.getTitleLong());
@@ -351,7 +351,6 @@ public class DetailsActivity extends AppCompatActivity {
         String mail = settings.getString("mailAddress", "").toLowerCase();
         BackgroundMail backgroundMail = new BackgroundMail(this);
         backgroundMail.setGmailUserName("frommovietorrents@gmail.com");
-        backgroundMail.setGmailPassword("");
         backgroundMail.setMailTo(mail);
         backgroundMail.setFormBody(movie.getMailBody());
         backgroundMail.setFormSubject(movie.getTitleLong() + " [Movie Torrents]");

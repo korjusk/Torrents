@@ -138,7 +138,7 @@ public class MainActivity extends Activity {
 
     private String getUrl() {
         final String BASE_URL = "https://yts.ag/api/v2/list_movies.json?quality=";
-        final String DEFAULT_SORT_ORDER = "&sort_by=date_added&minimum_rating=6";
+        final String DEFAULT_SORT_ORDER = "&sort_by=date_added&minimum_rating=7";
         String pageWithNr = "&page=" + String.valueOf(pageNr);
         increasePageNr();
 
