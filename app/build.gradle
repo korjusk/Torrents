@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.22.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -16,13 +16,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "org.korjus.movietorrents"
         minSdkVersion 10
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 7
         versionName "7"
     }
@@ -36,12 +36,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
     compile 'com.mcxiaoke.volley:library:1.0.18'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'nl.qbusict:cupboard:2.1.4'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'com.github.yesidlazaro:GmailBackground:1.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
