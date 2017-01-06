@@ -62,6 +62,8 @@ public class MainImageAdapter extends BaseAdapter {
                     .into(imageView);
 
             imageView.setTag(src);
+
+            preFetch(pos);
         }
         // Set on click listener to gridview and start new activity if pressed
         mainActivity.getGridView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,5 +94,16 @@ public class MainImageAdapter extends BaseAdapter {
 
     public long getItemId(int position) {
         return 0;
+    }
+
+    private void preFetch(long pos){
+        long fetchPos = pos + 4;
+        if (fetchPos <= getCount()){
+            Picasso.with(mainActivity)
+                    .load(cupboard().withDatabase(mainActivity.getDb()).get(Movie.class, fetchPos).getPoster())
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
+                    .fetch();
+        }
     }
 }
